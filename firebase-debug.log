@@ -1,29 +1,31 @@
-[debug] [2023-01-28T16:06:21.520Z] ----------------------------------------------------------------------
-[debug] [2023-01-28T16:06:21.521Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Dominik\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
-[debug] [2023-01-28T16:06:21.522Z] CLI Version:   11.21.0
-[debug] [2023-01-28T16:06:21.522Z] Platform:      win32
-[debug] [2023-01-28T16:06:21.522Z] Node Version:  v16.14.2
-[debug] [2023-01-28T16:06:21.522Z] Time:          Sat Jan 28 2023 17:06:21 GMT+0100 (Mitteleuropäische Normalzeit)
-[debug] [2023-01-28T16:06:21.523Z] ----------------------------------------------------------------------
+[debug] [2023-01-28T16:11:07.860Z] ----------------------------------------------------------------------
+[debug] [2023-01-28T16:11:07.862Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Dominik\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2023-01-28T16:11:07.862Z] CLI Version:   11.21.0
+[debug] [2023-01-28T16:11:07.862Z] Platform:      win32
+[debug] [2023-01-28T16:11:07.863Z] Node Version:  v16.14.2
+[debug] [2023-01-28T16:11:07.863Z] Time:          Sat Jan 28 2023 17:11:07 GMT+0100 (Mitteleuropäische Normalzeit)
+[debug] [2023-01-28T16:11:07.863Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2023-01-28T16:06:21.582Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2023-01-28T16:06:21.583Z] > authorizing via signed-in user (dthemueller@gmail.com)
-[debug] [2023-01-28T16:06:21.583Z] [iam] checking project moodbox-app for permissions ["cloudconfig.configs.get","cloudconfig.configs.update","cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
-[debug] [2023-01-28T16:06:21.585Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions [none]
-[debug] [2023-01-28T16:06:21.585Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions x-goog-quota-user=projects/moodbox-app
-[debug] [2023-01-28T16:06:21.585Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions {"permissions":["cloudconfig.configs.get","cloudconfig.configs.update","cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]}
-[debug] [2023-01-28T16:06:22.463Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions 200
-[debug] [2023-01-28T16:06:22.463Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions {"permissions":["cloudconfig.configs.get","cloudconfig.configs.update","cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]}
-[debug] [2023-01-28T16:06:22.463Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/moodbox-app/serviceAccounts/moodbox-app@appspot.gserviceaccount.com:testIamPermissions [none]
-[debug] [2023-01-28T16:06:22.464Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/moodbox-app/serviceAccounts/moodbox-app@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
-[debug] [2023-01-28T16:06:23.255Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/moodbox-app/serviceAccounts/moodbox-app@appspot.gserviceaccount.com:testIamPermissions 200
-[debug] [2023-01-28T16:06:23.256Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/moodbox-app/serviceAccounts/moodbox-app@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
-[debug] [2023-01-28T16:06:23.256Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/moodbox-app [none]
-[debug] [2023-01-28T16:06:23.616Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/moodbox-app 200
-[debug] [2023-01-28T16:06:23.616Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/moodbox-app {"projectId":"moodbox-app","projectNumber":"878525091265","displayName":"moodbox","name":"projects/moodbox-app","resources":{"hostingSite":"moodbox-app"},"state":"ACTIVE","etag":"1_f9b7a1da-d4d0-40a5-b297-539fec924a6e"}
-[debug] [2023-01-28T16:06:26.473Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/moodbox-app/sites pageToken=&pageSize=10
-[debug] [2023-01-28T16:06:27.555Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/moodbox-app/sites 200
-[debug] [2023-01-28T16:06:27.555Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/moodbox-app/sites {"sites":[{"name":"projects/moodbox-app/sites/moodbox-app","defaultUrl":"https://moodbox-app.web.app","appId":"1:878525091265:web:a252e12cf3916e22b8b340","type":"DEFAULT_SITE"}]}
-[debug] [2023-01-28T16:06:27.556Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:878525091265:web:a252e12cf3916e22b8b340/config [none]
-[debug] [2023-01-28T16:06:28.477Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:878525091265:web:a252e12cf3916e22b8b340/config 200
-[debug] [2023-01-28T16:06:28.477Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:878525091265:web:a252e12cf3916e22b8b340/config {"projectId":"moodbox-app","appId":"1:878525091265:web:a252e12cf3916e22b8b340","storageBucket":"moodbox-app.appspot.com","apiKey":"AIzaSyBu8zGxJD1mSyod2fniMkzFhYfq7iPd8tU","authDomain":"moodbox-app.firebaseapp.com","messagingSenderId":"878525091265"}
+[debug] [2023-01-28T16:11:07.934Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-01-28T16:11:07.935Z] > authorizing via signed-in user (dthemueller@gmail.com)
+[debug] [2023-01-28T16:11:07.935Z] [iam] checking project moodbox-app for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-01-28T16:11:07.937Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions [none]
+[debug] [2023-01-28T16:11:07.937Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions x-goog-quota-user=projects/moodbox-app
+[debug] [2023-01-28T16:11:07.937Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-01-28T16:11:08.326Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions 200
+[debug] [2023-01-28T16:11:08.326Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/moodbox-app:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-01-28T16:11:08.327Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/moodbox-app [none]
+[debug] [2023-01-28T16:11:08.644Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/moodbox-app 200
+[debug] [2023-01-28T16:11:08.644Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/moodbox-app {"projectId":"moodbox-app","projectNumber":"878525091265","displayName":"moodbox","name":"projects/moodbox-app","resources":{"hostingSite":"moodbox-app"},"state":"ACTIVE","etag":"1_f9b7a1da-d4d0-40a5-b297-539fec924a6e"}
+[debug] [2023-01-28T16:11:11.070Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/moodbox-app/sites pageToken=&pageSize=10
+[debug] [2023-01-28T16:11:11.509Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/moodbox-app/sites 200
+[debug] [2023-01-28T16:11:11.509Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/moodbox-app/sites {"sites":[{"name":"projects/moodbox-app/sites/moodbox-app","defaultUrl":"https://moodbox-app.web.app","appId":"1:878525091265:web:a252e12cf3916e22b8b340","type":"DEFAULT_SITE"}]}
+[debug] [2023-01-28T16:11:11.509Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:878525091265:web:a252e12cf3916e22b8b340/config [none]
+[debug] [2023-01-28T16:11:12.572Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:878525091265:web:a252e12cf3916e22b8b340/config 200
+[debug] [2023-01-28T16:11:12.572Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:878525091265:web:a252e12cf3916e22b8b340/config {"projectId":"moodbox-app","appId":"1:878525091265:web:a252e12cf3916e22b8b340","storageBucket":"moodbox-app.appspot.com","apiKey":"AIzaSyBu8zGxJD1mSyod2fniMkzFhYfq7iPd8tU","authDomain":"moodbox-app.firebaseapp.com","messagingSenderId":"878525091265"}
+[debug] [2023-01-28T16:11:28.348Z] TypeError: Cannot read properties of null (reading 'toString')
+    at ɵcodegenFunctionsDirectory (C:\Users\Dominik\AppData\Roaming\npm\node_modules\firebase-tools\lib\frameworks\next\index.js:220:18)
+    at async prepareFrameworks (C:\Users\Dominik\AppData\Roaming\npm\node_modules\firebase-tools\lib\frameworks\index.js:305:84)
+    at async deploy (C:\Users\Dominik\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:53:13)
+[error] 
+[error] Error: An unexpected error has occurred.
