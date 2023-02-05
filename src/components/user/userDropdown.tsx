@@ -13,6 +13,8 @@ interface UserDropdownProps {
   children: ReactNode;
 }
 
+//TODO: dark mode mit function, team session connection, create team option
+
 const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
   const { publicRuntimeConfig } = getConfig();
 
