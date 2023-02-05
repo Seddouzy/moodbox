@@ -1,6 +1,12 @@
 import { ComponentType, Fragment, ReactNode } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownCircleIcon,
+  CodeBracketIcon,
+  HeartIcon,
+  MoonIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
 import getConfig from "next/config";
 
 interface UserDropdownProps {
@@ -26,18 +32,35 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
           >
             <Popover.Panel className="absolute right-0 z-10 mt-3 w-80 max-w-sm transform px-4 sm:px-0 lg:max-w-3xl">
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
+                <div className="bg-gray-50 p-4">
                   <a
                     key={"bla"}
-                    href={"bla"}
+                    href={"reports"}
                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
-                      <ArrowDownCircleIcon />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 sm:h-7 sm:w-7">
+                      <HeartIcon />
                     </div>
                     <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-900">hey</p>
-                      <p className="text-sm text-gray-500">no</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        Connect to Team
+                      </p>
+                      <p className="text-sm text-gray-500">Statistics</p>
+                    </div>
+                  </a>
+                </div>
+                <div className="bg-gray-50 p-4">
+                  <a
+                    key={"bla"}
+                    href={"reports"}
+                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 sm:h-7 sm:w-7">
+                      <UserGroupIcon />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-900">Team</p>
+                      <p className="text-sm text-gray-500">Statistics</p>
                     </div>
                   </a>
                 </div>
@@ -46,17 +69,28 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                     href={publicRuntimeConfig.githubRepo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flow-root rounded-md px-4 py-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
-                    <span className="flex items-center">
-                      <span className="text-sm font-medium text-gray-900">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 sm:h-7 sm:w-7">
+                      <CodeBracketIcon />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-900">
                         Source Code
-                      </span>
-                    </span>
-                    <span className="block text-sm text-gray-500">
-                      Pls contribute!
-                    </span>
+                      </p>
+                      <p className="text-sm text-gray-500">Pls contribute!</p>
+                    </div>
                   </a>
+                </div>
+                <div className="bg-gray-300 p-4">
+                  <div className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
+                    <button className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-600 sm:h-7 sm:w-7">
+                      <MoonIcon />
+                    </button>
+                    <p className="flex text-sm shrink-0 font-medium text-gray-700 ml-4 justify-center">
+                      Dark Mode
+                    </p>
+                  </div>
                 </div>
               </div>
             </Popover.Panel>

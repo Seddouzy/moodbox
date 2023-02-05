@@ -38,14 +38,19 @@ const VoteMood = () => {
   };
 
   return (
-    <div className="p-8 flex flex-row item-center gap-4">
+    <div className="p-8 flex flex-row item-center gap-4 justify-center">
       <VoteButton
-        customClasses={["bg-red-300", "text-red-700"]}
+        customClasses={["bg-red-300", "text-red-700", "hover:animate-bounce"]}
         sentiment={2}
         vote={voteSentiment}
         icon={<HandThumbDownIcon className="h-6 w-6" />}
       />
       <VoteButton
+        customClasses={[
+          "bg-emerald-300",
+          "text-emerald-700",
+          "hover:animate-bounce",
+        ]}
         sentiment={1}
         vote={voteSentiment}
         icon={<HandThumbUpIcon className="h-6 w-6" />}

@@ -22,7 +22,7 @@ const UserAvatar: ComponentType<UserAvatarProps> = () => {
 
   return user.data ? (
     <UserDropdown>
-      <div className="relative rounded-full bg-emerald-300 h-12 w-12 flex flex-row justify-center items-center overflow-hidden">
+      <div className="relative rounded-full bg-yellow-500 h-12 w-12 flex flex-row justify-center items-center overflow-hidden">
         {user.data.photoURL ? (
           <Image
             alt={user.data.displayName ?? ""}
