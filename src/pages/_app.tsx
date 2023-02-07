@@ -18,7 +18,7 @@ interface FirebaseAppWrapperProps {
 export default function App({ Component, pageProps }: AppProps) {
   const { publicRuntimeConfig } = getConfig();
   return (
-    <>
+    <div className="h-screen">
       <Head>
         <title>Moodbox</title>
       </Head>
@@ -29,17 +29,15 @@ export default function App({ Component, pageProps }: AppProps) {
         >
           <LocalFirebaseAuthProvider>
             <LocalFirestoreProvider>
-              <>
-                <div className="bg-slate-700 font-mono">
-                  <HeaderBar title="MoodBox" />
-                  <Component {...pageProps} />
-                </div>
-              </>
+              <div className="bg-slate-700 font-mono h-full">
+                <HeaderBar title="MoodBox" />
+                <Component {...pageProps} />
+              </div>
             </LocalFirestoreProvider>
           </LocalFirebaseAuthProvider>
         </FirebaseAppProvider>
       )}
       <ToastContainer position="bottom-right" />
-    </>
+    </div>
   );
 }

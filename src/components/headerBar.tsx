@@ -5,7 +5,9 @@ interface HeaderBarProps {
 }
 export const HeaderBar: ComponentType<HeaderBarProps> = ({ title }) => (
   <div className="p-8 w-full flex flex-row justify-between bg-slate-700">
-    <h1 className="text-4xl text-yellow-500 drop-shadow-md">MoodBox</h1>
+    <h1 className="text-4xl text-yellow-500 [text-shadow:0_0_1px_rgba(255,255,255,1)]">
+      MoodBox
+    </h1>
     <UserAvatar />
   </div>
 );
