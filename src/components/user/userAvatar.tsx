@@ -16,10 +16,6 @@ const UserAvatar: ComponentType<UserAvatarProps> = () => {
     await signInWithRedirect(auth, provider);
   };
 
-  const doStuff = () => {
-    console.log("stuff");
-  };
-
   return user.data ? (
     <UserDropdown>
       <div className="relative rounded-full bg-yellow-500 h-12 w-12 flex flex-row justify-center items-center overflow-hidden">
