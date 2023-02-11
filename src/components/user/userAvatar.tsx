@@ -1,15 +1,19 @@
 import { ComponentType } from "react";
 import { useAuth, useUser } from "reactfire";
-import { GithubAuthProvider, signInWithRedirect } from "firebase/auth";
+import { GithubAuthProvider, signInWithRedirect, signOut } from "firebase/auth";
 import { UserIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import UserDropdown from "./userDropdown";
+import { addDoc, collection, doc, getFirestore } from "firebase/firestore";
+import { useFirestore, useFirestoreDoc, useFirestoreDocData } from "reactfire";
 
 interface UserAvatarProps {}
 
 const UserAvatar: ComponentType<UserAvatarProps> = () => {
   const auth = useAuth();
   const user = useUser();
+  const firestore = useFirestore();
+  const userCollection = collection(firestore, "Users");
 
   const signIn = async () => {
     const provider = new GithubAuthProvider();
