@@ -5,10 +5,10 @@ import { useFirestore, useFirestoreDoc, useFirestoreDocData } from "reactfire";
 
 const CreateTeam = () => {
   const firestore = useFirestore();
-  const teamCollection = collection(firestore, "BDA");
+  const teamCollection = collection(firestore, "Teams");
 
   {
-    /*const createTeam = async (teamname: string, adminuser: string) => {
+    /*const createTeam = async (teamname: string, user: string) => {
     await toast.promise(
       addDoc(teamCollection, {
         createdAt: new Date(),
