@@ -1,10 +1,13 @@
 import { ComponentType, Fragment, ReactNode } from "react";
 import { Popover, Transition } from "@headlessui/react";
+import useDarkMode from "./useDarkMode";
+
 import {
   ArrowDownCircleIcon,
   CodeBracketIcon,
   HeartIcon,
   MoonIcon,
+  SunIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import getConfig from "next/config";
@@ -17,6 +20,7 @@ interface UserDropdownProps {
 
 const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
   const { publicRuntimeConfig } = getConfig();
+  const [colorTheme, setTheme] = useDarkMode();
 
   return (
     <Popover className="relative">
@@ -33,6 +37,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
             leaveTo="opacity-0 translate-y-1"
           >
             <Popover.Panel className="absolute right-0 z-10 mt-3 w-80 max-w-sm transform px-4 sm:px-0 lg:max-w-3xl">
+              {/* <-- Team creation and join --> */}
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="bg-gray-50 p-4">
                   <a
@@ -45,12 +50,13 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900">
-                        Connect to Team
+                        Join or Create Team
                       </p>
-                      <p className="text-sm text-gray-500">Statistics</p>
+                      <p className="text-sm text-gray-500">Go Team!</p>
                     </div>
                   </a>
                 </div>
+                {/* <-- Team statistics --> */}
                 <div className="bg-gray-50 p-4">
                   <a
                     key={"bla"}
@@ -66,6 +72,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                     </div>
                   </a>
                 </div>
+                {/* <-- Source Code--> */}
                 <div className="bg-gray-50 p-4">
                   <a
                     href={publicRuntimeConfig.githubRepo}
@@ -84,15 +91,33 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                     </div>
                   </a>
                 </div>
+                {/* <-- Dark Mode --> */}
                 <div className="bg-gray-300 p-4">
-                  <div className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
-                    <button className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-600 sm:h-7 sm:w-7">
-                      <MoonIcon />
-                    </button>
-                    <p className="flex text-sm shrink-0 font-medium text-gray-700 ml-4 justify-center">
-                      Dark Mode
-                    </p>
-                  </div>
+                  {colorTheme === "dark" ? (
+                    <div className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
+                      <button
+                        onClick={() => setTheme("dark")}
+                        className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-600 sm:h-7 sm:w-7"
+                      >
+                        <MoonIcon />
+                      </button>
+                      <p className="flex text-sm shrink-0 font-medium text-gray-700 ml-4 justify-center">
+                        Theme
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
+                      <button
+                        onClick={() => setTheme("light")}
+                        className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-600 sm:h-7 sm:w-7"
+                      >
+                        <SunIcon />
+                      </button>
+                      <p className="flex text-sm shrink-0 font-medium text-gray-700 ml-4 justify-center">
+                        Theme
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </Popover.Panel>
