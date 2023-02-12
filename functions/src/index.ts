@@ -1,33 +1,27 @@
-import * as functions from "firebase-functions";
-
-// // Start writing functions
-// // https://firebase.google.com/docs/functions/typescript
-//
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 
 exports.memberJoin = functions.https.onCall(async (data, context) => {
-  const teamId = data.teamId;
-  const token = data.token;
+  const { userId, teamid, tokenid } = data;
 
-  // Perform backend check on the token and teamId
-  const isValid = await performBackendCheck(teamId, token);
-
-  if (!isValid) {
+  // Check that the user is authenticated
+  if (!context.auth) {
     throw new functions.https.HttpsError(
       "unauthenticated",
-      "Invalid token or team ID"
+      "You must be logged in to join a team."
     );
   }
 
-  // Add the user to the team
-  await addMemberToTeam(context.auth.uid, teamId);
+  // Add the user to the team in the "members" collection
+  const membersRef = admin
+    .firestore()
+    .collection("teams")
+    .doc(teamid)
+    .collection("members");
+  await membersRef.doc(userId).set({ joinedAt: new Date() });
 
-  return { success: true, message: "You have successfully joined the team!" };
+  // TODO: Implement token verification and deletion
+
+  // Return a success message
+  return { message: `User ${userId} joined team ${teamid}.` };
 });
-
-async function performBackendCheck(teamId, token) {
-  // Perform check on the backend and return whether the token is valid
-}
-
-async function addMemberToTeam(userId, teamId) {
-  // Add the user to the team in the database
-}
