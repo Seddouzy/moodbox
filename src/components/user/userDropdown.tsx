@@ -5,7 +5,6 @@ import { useAuth, useUser } from "reactfire";
 import useDarkMode from "./useDarkMode";
 
 import {
-  ArrowDownCircleIcon,
   CodeBracketIcon,
   HeartIcon,
   MoonIcon,
@@ -50,7 +49,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                 <div className="bg-gray-50 dark:bg-slate-700 p-4">
                   <a
                     key={"bla"}
-                    href={"reports"}
+                    href={"team"}
                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7">
