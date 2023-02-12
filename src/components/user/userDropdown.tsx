@@ -109,10 +109,10 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                 </div>
                 {/* <-- Logout --> */}
                 <div className="bg-gray-300 dark:bg-slate-700 p-4">
-                  <div className="-m-3 flex rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
+                  <div className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
                     <button
                       onClick={() => logOut()}
-                      className="text-gray-600 dark:text-white sm:h-7 sm:w-7"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7"
                     >
                       <UserIcon />
                     </button>
