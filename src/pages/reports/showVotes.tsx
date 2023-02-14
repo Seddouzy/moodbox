@@ -1,5 +1,6 @@
+import { ComponentType } from "react";
 
-export const ShowVotes = ({}) => (
+const ShowVotes: ComponentType = () => (
   <div className="text-white">
     <div>
       <h3>Good: </h3>
@@ -11,3 +12,5 @@ export const ShowVotes = ({}) => (
     </div>
   </div>
 );
+
+export default ShowVotes;

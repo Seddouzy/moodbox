@@ -11,10 +11,6 @@ import LocalFirebaseAuthProvider from "@/providers/firebaseAuthProvider";
 import LocalFirestoreProvider from "@/providers/firestoreProvider";
 import { ToastContainer } from "react-toastify";
 
-interface FirebaseAppWrapperProps {
-  children: ReactNode;
-}
-
 export default function App({ Component, pageProps }: AppProps) {
   const { publicRuntimeConfig } = getConfig();
   return (
