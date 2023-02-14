@@ -16,6 +16,7 @@
     }
   ],
   "hosting": {
+    "webframeworks": true,
     "source": ".",
     "ignore": [
       "firebase.json",
