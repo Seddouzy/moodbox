@@ -1,7 +1,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-exports.memberJoin = functions.https.onCall(async (data, context) => {
+export const memberJoin = functions.https.onCall(async (data, context) => {
   const { userId, teamid, tokenid } = data;
 
   // Check that the user is authenticated
