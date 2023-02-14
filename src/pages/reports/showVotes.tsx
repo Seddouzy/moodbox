@@ -1,6 +1,3 @@
-import { ComponentType } from "react";
-import { addDoc, collection, doc, getFirestore } from "firebase/firestore";
-import { useFirestore, useFirestoreDoc, useFirestoreDocData } from "reactfire";
 
 export const ShowVotes = ({}) => (
   <div className="text-white">
