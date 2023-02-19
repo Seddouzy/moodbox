@@ -2,6 +2,7 @@ import { ComponentType } from "react";
 import { useFirestore } from "reactfire";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
+import CreateTeam from "./createTeam";
 
 interface CreateTeamInvitationLinkProps {
   teamId: string;
@@ -23,7 +24,13 @@ const CreateTeamInvitationLink: ComponentType<
   return (
     <div className="rounded-xl bg-slate-800 text-white p-8">
       <h2>Generate a Team Invitation Link</h2>
-      <button onClick={() => createTeamInvitationLink()}>Generate</button>
+      <input type="TeamName" />
+      <button
+        className="rounded-xl bg-slate-700 hover:bg-slate-600 text-white p-1"
+        onClick={() => createTeamInvitationLink()}
+      >
+        Generate
+      </button>
       {teamData?.invitationLink && <div>{teamData.invitationLink}</div>}
     </div>
   );

@@ -1,4 +1,5 @@
 import { useFirestore, useFirestoreDoc, useFirestoreDocData } from "reactfire";
+import handleJoinClick from "./joinTeamButton";
 
 const CreateTeam = () => {
   const firestore = useFirestore();

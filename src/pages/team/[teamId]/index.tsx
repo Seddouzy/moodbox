@@ -4,7 +4,6 @@ import { NextPage } from "next";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import CreateTeamInvitationLink from "../../../components/team/createTeamInvitationLink";
-import CreateTeam from "@/components/team/createTeam";
 
 const TeamDetails: NextPage = () => {
   const router = useRouter();
@@ -38,6 +37,7 @@ const TeamDetails: NextPage = () => {
     }
   }, [teamId, firestore]);
 
+  //TODO: Hier zweispaltig join team und create Team? Oder einfach Team join nur über invitation link ganz ohne extra page?
   return (
     <div className="container p-4 text-black dark:text-white">
       {error && <div>Error: {error.message}</div>}
@@ -45,7 +45,6 @@ const TeamDetails: NextPage = () => {
       {data && !loading && !error && (
         <>
           <h1 className="text-xl">{data.name}</h1>
-          <CreateTeam></CreateTeam>
           {teamId && (
             <CreateTeamInvitationLink
               teamId={teamId.toString()}

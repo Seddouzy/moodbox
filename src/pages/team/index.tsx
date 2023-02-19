@@ -1,3 +1,9 @@
+import Join from "./joinTeam";
+
 export default function Home({}) {
-  return <div></div>;
+  return (
+    <div>
+      <Join></Join>
+    </div>
+  );
 }
