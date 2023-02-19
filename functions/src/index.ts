@@ -3,7 +3,7 @@ import * as admin from "firebase-admin";
 
 export const memberJoin = functions.https.onCall(
   async (data: any, context: functions.https.CallableContext) => {
-    const { userId, teamId } = data;
+    const { userId, teamId, tokenId } = data;
 
     // Check that the user is authenticated
     if (!context.auth) {
@@ -14,12 +14,17 @@ export const memberJoin = functions.https.onCall(
     }
 
     // Add the user to the team in the "members" collection
-    const membersRef = admin
-      .firestore()
-      .collection("teams")
-      .doc(teamId)
-      .collection("members");
-    await membersRef.doc(userId).set({ joinedAt: new Date() });
+    const teamRef = admin.firestore().collection("teams").doc(teamId);
+    const membersRef = teamRef.collection("members");
+    const team = await teamRef.get();
+    if (team.data()?.tokenId === tokenId) {
+      await membersRef.doc(userId).set({ joinedAt: new Date() });
+    } else {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "Token is not matching!"
+      );
+    }
 
     // TODO: Implement token verification and deletion
 

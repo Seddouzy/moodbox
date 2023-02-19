@@ -9,6 +9,7 @@ import getConfig from "next/config";
 import Head from "next/head";
 import LocalFirebaseAuthProvider from "@/providers/firebaseAuthProvider";
 import LocalFirestoreProvider from "@/providers/firestoreProvider";
+import LocalFirebaseFunctionsProvider from "@/providers/firebaseFunctionsProvider";
 import { ToastContainer } from "react-toastify";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -25,10 +26,12 @@ export default function App({ Component, pageProps }: AppProps) {
         >
           <LocalFirebaseAuthProvider>
             <LocalFirestoreProvider>
-              <div className="dark:bg-slate-700 bg-white font-mono h-full">
-                <HeaderBar title="MoodBox" />
-                <Component {...pageProps} />
-              </div>
+              <LocalFirebaseFunctionsProvider>
+                <div className="dark:bg-slate-700 bg-white font-mono h-full">
+                  <HeaderBar title="MoodBox" />
+                  <Component {...pageProps} />
+                </div>
+              </LocalFirebaseFunctionsProvider>
             </LocalFirestoreProvider>
           </LocalFirebaseAuthProvider>
         </FirebaseAppProvider>
