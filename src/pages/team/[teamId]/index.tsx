@@ -4,6 +4,7 @@ import { NextPage } from "next";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import CreateTeamInvitationLink from "../../../components/team/createTeamInvitationLink";
+import CreateTeam from "@/components/team/createTeam";
 
 const TeamDetails: NextPage = () => {
   const router = useRouter();
@@ -44,6 +45,7 @@ const TeamDetails: NextPage = () => {
       {data && !loading && !error && (
         <>
           <h1 className="text-xl">{data.name}</h1>
+          <CreateTeam></CreateTeam>
           {teamId && (
             <CreateTeamInvitationLink
               teamId={teamId.toString()}
