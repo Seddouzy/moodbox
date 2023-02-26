@@ -2,7 +2,6 @@ import { ComponentType } from "react";
 import { useFirestore } from "reactfire";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
-import CreateTeam from "./createTeam";
 
 interface CreateTeamInvitationLinkProps {
   teamId: string;

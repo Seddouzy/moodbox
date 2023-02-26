@@ -13,7 +13,7 @@ const UserAvatar: ComponentType<UserAvatarProps> = () => {
   const auth = useAuth();
   const user = useUser();
   const firestore = useFirestore();
-  const userCollection = collection(firestore, "Users");
+  const userCollection = collection(firestore, "Users"); //TODO: right user into user collection list
 
   const signIn = async () => {
     const provider = new GithubAuthProvider();

@@ -44,7 +44,7 @@ const TeamDetails: NextPage = () => {
       {loading && <div>Loading...</div>}
       {data && !loading && !error && (
         <>
-          <h1 className="text-xl">{data.name}</h1>
+          <h1 className="text-xl">Welcome to your Team: {data.name}</h1>
           {teamId && (
             <CreateTeamInvitationLink
               teamId={teamId.toString()}

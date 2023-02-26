@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { HeaderBar } from "@/components/headerBar";
 import type { AppProps } from "next/app";
 import { FirebaseAppProvider } from "reactfire";
-import { ReactNode } from "react";
 import getConfig from "next/config";
 import Head from "next/head";
 import LocalFirebaseAuthProvider from "@/providers/firebaseAuthProvider";

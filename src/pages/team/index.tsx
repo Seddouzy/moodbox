@@ -1,3 +1,5 @@
+import CreateTeam from "@/components/team/createTeam";
+
 export default function Home({}) {
-  return <div></div>;
+  return <CreateTeam />;
 }
