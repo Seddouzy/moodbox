@@ -2,35 +2,35 @@ import { ComponentType } from "react";
 import { useFirestore } from "reactfire";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 interface CreateTeamInvitationLinkProps {
   teamId: string;
-  teamData: any; // TODO: Create Team Interface
+  tokenId: string;
   updateTeam: (data: Record<string, any>) => void;
 }
 
 const CreateTeamInvitationLink: ComponentType<
   CreateTeamInvitationLinkProps
-> = ({ teamId, teamData, updateTeam }) => {
-  const [invitationLink, setInvitationLink] = useState();
+> = ({ teamId, tokenId, updateTeam }) => {
+  const baseInvitationLink = `${window.location.host}/team/${teamId}/join`;
+  const [invitationLink, setInvitationLink] = useState(
+    `${baseInvitationLink}?tokenId=${tokenId}`
+  );
 
   const createTeamInvitationLink = () => {
-    const uuid = "someMangoStuff";
-    const invitationLink = `${window.location.host}?teamId=${teamId}&token=${uuid}`;
-    updateTeam({ invitationLink });
+    const tokenId = uuidv4();
+    setInvitationLink(`${baseInvitationLink}?tokenId=${tokenId}`);
+    updateTeam({ tokenId });
   };
 
   return (
-    <div className="rounded-xl bg-slate-800 text-white p-8">
+    <div className="rounded-xl bg-slate-100 dark:bg-slate-800 dark:text-white p-8">
       <h2>Generate a Team Invitation Link</h2>
-      <input type="TeamName" />
-      <button
-        className="rounded-xl bg-slate-700 hover:bg-slate-600 text-white p-1"
-        onClick={() => createTeamInvitationLink()}
-      >
+      <button className="btn" onClick={createTeamInvitationLink}>
         Generate
       </button>
-      {teamData?.invitationLink && <div>{teamData.invitationLink}</div>}
+      {tokenId && <div>{invitationLink}</div>}
     </div>
   );
 };

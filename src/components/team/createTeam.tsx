@@ -19,7 +19,7 @@ const CreateTeam = () => {
         owners: user,
       };
 
-      const teamRef = collection(firestore, "Teams");
+      const teamRef = collection(firestore, "teams");
       const docRef = await addDoc(teamRef, newTeamData); // Add new team to Teams collection
       console.log("New team added:", newTeamData);
 

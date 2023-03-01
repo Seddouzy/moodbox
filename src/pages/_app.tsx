@@ -28,7 +28,9 @@ export default function App({ Component, pageProps }: AppProps) {
               <LocalFirebaseFunctionsProvider>
                 <div className="dark:bg-slate-700 bg-white font-mono h-full">
                   <HeaderBar title="MoodBox" />
-                  <Component {...pageProps} />
+                  <div className="container mx-auto">
+                    <Component {...pageProps} />
+                  </div>
                 </div>
               </LocalFirebaseFunctionsProvider>
             </LocalFirestoreProvider>
