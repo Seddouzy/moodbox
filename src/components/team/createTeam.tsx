@@ -35,16 +35,19 @@ const CreateTeam = () => {
   };
 
   return (
-    <div>
-      <label>
-        Team Name:
+    <div className="">
+      <label className="rounded-md text-black dark:text-white">
+        Your future Team Name:
         <input
           type="text"
+          className="mt-2 px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </label>
-      <button onClick={createNewTeam}>Create Team</button>
+      <button className="btn mt-2" onClick={createNewTeam}>
+        Create Team
+      </button>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import { user } from "firebase-functions/v1/auth";
 
 admin.initializeApp();
 
@@ -66,6 +67,36 @@ export const isMember = functions.https.onCall(
     } else {
       return {
         message: `User ${userId} is not a member of team ${teamId} yet`,
+        state: false,
+      };
+    }
+  }
+);
+
+export const teamList = functions.https.onCall(
+  async (data: any, context: functions.https.CallableContext) => {
+    const { userId, teamId } = data;
+    userIsAuthenticatedCheck(context);
+
+    functions.logger.log(
+      `user ${userId} requesting the teammember list for ${teamId}`
+    );
+
+    const teamList = admin
+      .firestore()
+      .collection("teams")
+      .doc(teamId)
+      .collection("members")
+      .doc(userId);
+    const teamMemberListRef = await teamList.get();
+    if (teamMemberListRef.data()) {
+      return {
+        message: `User ${userId} is owner of team ${teamId}`,
+        state: true,
+      };
+    } else {
+      return {
+        message: `User ${userId} is not a owner of team ${teamId} yet`,
         state: false,
       };
     }
