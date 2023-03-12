@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 const CreateTeam = () => {
   const firestore = useFirestore();
   const [name, setName] = useState("");
-  const user = useUser().data?.email?.toString();
+  const user = useUser().data?.uid;
   const router = useRouter();
 
   const createNewTeam = async () => {
@@ -17,6 +17,7 @@ const CreateTeam = () => {
         name,
         createdAt: new Date(),
         owners: user,
+        members: user,
       };
 
       const teamRef = collection(firestore, "teams");
@@ -40,7 +41,7 @@ const CreateTeam = () => {
         Your future Team Name:
         <input
           type="text"
-          className="mt-2 px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400"
+          className="mt-2 px-3 py-2 dark:bg-black bg-white  border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />

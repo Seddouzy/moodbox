@@ -2,7 +2,11 @@ import { ClipboardIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { toast } from "react-toastify";
 
-const CopyButton = ({ text }) => {
+interface CopyButtonProps {
+  text: string;
+}
+
+const CopyButton = ({ text }: CopyButtonProps) => {
   const handleCopyClick = () => {
     navigator.clipboard
       .writeText(text)
