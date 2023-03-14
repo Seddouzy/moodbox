@@ -2,13 +2,14 @@ import { toast } from "react-toastify";
 import { useFirestore } from "reactfire";
 import { useState } from "react";
 import { useUser } from "reactfire";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, setDoc, collection, doc } from "firebase/firestore";
 import { useRouter } from "next/router";
+import UserRole from "@/shared/enum/userRole.enum";
 
 const CreateTeam = () => {
   const firestore = useFirestore();
   const [name, setName] = useState("");
-  const user = useUser().data?.uid;
+  const user = useUser().data;
   const router = useRouter();
 
   const createNewTeam = async () => {
@@ -16,13 +17,19 @@ const CreateTeam = () => {
       const newTeamData = {
         name,
         createdAt: new Date(),
-        owners: user,
-        members: user,
+      };
+      const newMemberRef = {
+        role: UserRole.OWNER,
+        email: user?.email,
+        displayName: user?.displayName,
+        picture: user?.photoURL,
       };
 
       const teamRef = collection(firestore, "teams");
-      const docRef = await addDoc(teamRef, newTeamData); // Add new team to Teams collection
+      const docRef = await addDoc(teamRef, newTeamData); // Add new team to Teams collection TODO: add members into a members sub collection
       console.log("New team added:", newTeamData);
+      const memberRef = doc(collection(docRef, "members"), user?.uid);
+      const memberDocRef = await setDoc(memberRef, newMemberRef);
 
       // Show success toast message
       toast.success("Team created 👌");

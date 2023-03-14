@@ -2,19 +2,24 @@ import { useAuth, useUser, useFunctions } from "reactfire";
 
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { httpsCallable } from "firebase/functions";
+import UserRole from "@/shared/enum/userRole.enum";
 
-export const useIsTeamMember = ({
+export const useHasRole = ({
   teamId,
   userId,
+  role,
 }: {
   teamId?: string;
   userId?: string;
-}): boolean => {
+  role?: UserRole;
+}): boolean | undefined => {
   const functions = useFunctions();
   const { status, data: user } = useUser();
-  const [userIsTeamMember, setUserIsTeamMember] = useState(false);
+  const [userHasRole, setUserHasRole] = useState<undefined | boolean>(
+    undefined
+  );
 
-  const isMember = httpsCallable(functions, "isMember");
+  const hasRole = httpsCallable(functions, "hasRole");
   useEffect(() => {
     if (user) {
       checkUserMembership();
@@ -23,15 +28,15 @@ export const useIsTeamMember = ({
 
   const checkUserMembership = () => {
     if (!userId || !teamId) {
-      setUserIsTeamMember(false);
+      setUserHasRole(false);
     }
-    isMember({ userId, teamId })
-      .then((res) => setUserIsTeamMember((res.data as any).state))
+    hasRole({ userId, teamId, role })
+      .then((res) => setUserHasRole((res.data as any).state))
       .catch((err) => {
         console.error(err);
-        setUserIsTeamMember(false);
+        setUserHasRole(false);
       });
   };
 
-  return userIsTeamMember;
+  return userHasRole;
 };

@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { httpsCallable } from "firebase/functions";
 import { useRouter } from "next/router";
 import ArrowPathIcon from "@heroicons/react/24/outline/ArrowPathIcon";
+import LoadingSpinner from "../general/loadingSpinner";
+import NotLoggedin from "../general/notLoggedin";
 
 interface Props {
   teamId: string;
@@ -34,7 +36,7 @@ const JoinTeamButton: ComponentType<Props> = ({
   }, [userIsTeamMember, teamId]);
 
   //private memberJoinFunction: firebase.functions.HttpsCallable;
-  // TODO: call function vai axios http request
+  // TODO: call function via axios http request
 
   const handleJoinClick = async () => {
     setLoading(true);
@@ -60,10 +62,12 @@ const JoinTeamButton: ComponentType<Props> = ({
       disabled={!canJoin || loading}
     >
       Join Team
-      {loading && <ArrowPathIcon className="animate-spin w-6 h-6" />}
+      {loading && <LoadingSpinner />}
     </button>
   ) : (
-    <div>Login now!</div>
+    <div>
+      Login now! <NotLoggedin />
+    </div>
   );
 };
 

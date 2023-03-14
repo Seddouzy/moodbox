@@ -1,6 +1,5 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { user } from "firebase-functions/v1/auth";
 
 admin.initializeApp();
 
@@ -14,8 +13,75 @@ const userIsAuthenticatedCheck = (context: functions.https.CallableContext) => {
   }
 };
 
+const hasVoteInLast24Hours = async (
+  teamId: string,
+  context: functions.https.CallableContext
+) => {
+  // retrieve all votes in team from last 24 hours
+  const now = new Date();
+  const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000); // Subtract 24 hours from the current time
+  const teamVotesRef = admin.firestore().collection(`teams/${teamId}/votes`);
+  const querySnapshot = await teamVotesRef
+    .where("createdAt", ">", yesterday)
+    .where("userId", "==", context.auth?.uid)
+    .get()
+    .catch((err) => {
+      console.error("Error getting votes in team:", err);
+      throw err;
+    });
+  if (querySnapshot.empty) {
+    return false;
+  }
+  return true;
+};
+
+export const canVote = functions.https.onCall(
+  async (data: any, context: functions.https.CallableContext) => {
+    const { teamId } = data;
+    userIsAuthenticatedCheck(context);
+
+    functions.logger.log(
+      `user ${context.auth?.uid} requesting to vote on team ${teamId}`
+    );
+
+    const allowedToVote = !(await hasVoteInLast24Hours(teamId, context));
+    if (allowedToVote) {
+      return {
+        message: `User ${context.auth?.uid} is allowed to vote in team ${teamId}`,
+        state: true,
+      };
+    }
+    return {
+      message: `User ${context.auth?.uid} is not allowed to vote in team ${teamId}. Already voted in last 24 hours.`,
+      state: false,
+    };
+  }
+);
+
+export const vote = functions.https.onCall(
+  async (data: any, context: functions.https.CallableContext) => {
+    const { teamId, sentiment } = data;
+    userIsAuthenticatedCheck(context);
+    const isAllowedToVote = !(await hasVoteInLast24Hours(teamId, context));
+    if (!isAllowedToVote) {
+      throw new functions.https.HttpsError(
+        "permission-denied",
+        "User is not allowed to vote! Already voted in last 24 hours."
+      );
+    }
+    // Vote will be set
+    const teamVotesRef = admin.firestore().collection(`teams/${teamId}/votes`);
+    await teamVotesRef.add({
+      createdAt: new Date(),
+      sentiment,
+      userId: context.auth?.uid,
+    });
+  }
+);
+
 export const memberJoin = functions.https.onCall(
   async (data: any, context: functions.https.CallableContext) => {
+    // TODO: Check if we even need to send the userId -> can be retrieved via context
     const { userId, teamId, tokenId } = data;
     userIsAuthenticatedCheck(context);
 
@@ -43,9 +109,10 @@ export const memberJoin = functions.https.onCall(
   }
 );
 
-export const isMember = functions.https.onCall(
+export const hasRole = functions.https.onCall(
   async (data: any, context: functions.https.CallableContext) => {
-    const { userId, teamId } = data;
+    // TODO: Check if we even need to send the userId -> can be retrieved via context
+    const { userId, teamId, role } = data;
     userIsAuthenticatedCheck(context);
 
     functions.logger.log(
@@ -59,44 +126,21 @@ export const isMember = functions.https.onCall(
       .collection("members")
       .doc(userId);
     const userInTeam = await teamMembersRef.get();
-    if (userInTeam.data()) {
+    const userData = userInTeam.data();
+    if (userData) {
+      if (userData.role === role || role === "member") {
+        return {
+          message: `User ${userId} has role ${role} in team ${teamId}`,
+          state: true,
+        };
+      }
       return {
-        message: `User ${userId} is member of team ${teamId}`,
-        state: true,
+        message: `User ${userId} is a member of team ${teamId} but does not have the role ${role}`,
+        state: false,
       };
     } else {
       return {
         message: `User ${userId} is not a member of team ${teamId} yet`,
-        state: false,
-      };
-    }
-  }
-);
-
-export const teamList = functions.https.onCall(
-  async (data: any, context: functions.https.CallableContext) => {
-    const { userId, teamId } = data;
-    userIsAuthenticatedCheck(context);
-
-    functions.logger.log(
-      `user ${userId} requesting the teammember list for ${teamId}`
-    );
-
-    const teamList = admin
-      .firestore()
-      .collection("teams")
-      .doc(teamId)
-      .collection("members")
-      .doc(userId);
-    const teamMemberListRef = await teamList.get();
-    if (teamMemberListRef.data()) {
-      return {
-        message: `User ${userId} is owner of team ${teamId}`,
-        state: true,
-      };
-    } else {
-      return {
-        message: `User ${userId} is not a owner of team ${teamId} yet`,
         state: false,
       };
     }

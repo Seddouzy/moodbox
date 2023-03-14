@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 
 const ListOfMyTeams = () => {
-  const [teams, setTeams] = useState([]);
+  const [teams, setTeams] = useState<any[]>([]);
   const userId = useUser().data?.uid;
 
   useEffect(() => {
@@ -31,9 +31,14 @@ const ListOfMyTeams = () => {
   return (
     <div>
       <h1>Teams</h1>
-      <ul>
+      <ul className="mt-4">
         {teams.map((team) => (
-          <li key={team.id}>{team.name}</li>
+          <li
+            key={team.id}
+            className="px-3 py-2 rounded-lg hover:shadow:xl transition-all ease-in-out"
+          >
+            {team.name}
+          </li>
         ))}
       </ul>
     </div>

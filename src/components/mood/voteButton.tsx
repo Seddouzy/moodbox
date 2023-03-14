@@ -14,7 +14,7 @@ export const VoteButton: ComponentType<VoteButtonProps> = ({
   vote,
 }) => (
   <button
-    className={`px-4 py-2 rounded-md shadow-xl flex flex-row gap-2 items-center ${customClasses?.join(
+    className={`px-8 py-4 rounded-xl transition-all ease-in-out hover:shadow-2xl flex flex-row gap-2 items-center ${customClasses?.join(
       " "
     )}`}
     onClick={() => vote(sentiment)}

@@ -17,9 +17,8 @@ import { useHasRole } from "@/hooks/useHasRole";
 import CreateTeamInvitationLink from "../../../components/team/createTeamInvitationLink";
 import UserRole from "@/shared/enum/userRole.enum";
 import NotAuthorized from "@/components/general/notAuthorized";
-import VoteMood from "@/components/mood/voteMood";
 
-const TeamDetails: NextPage = () => {
+const TeamSettings: NextPage = () => {
   const router = useRouter();
   const { teamId } = router.query;
   const firestore = useFirestore();
@@ -33,7 +32,7 @@ const TeamDetails: NextPage = () => {
   const hasRole = useHasRole({
     teamId: teamId as string,
     userId: user?.uid,
-    role: UserRole.MEMBER,
+    role: UserRole.OWNER,
   });
 
   const updateTeam = async (updateData: Record<string, any>) => {
@@ -72,11 +71,11 @@ const TeamDetails: NextPage = () => {
   }, [teamId, firestore]);
 
   if (loading || hasRole === undefined) {
-    return <LoadingSpinner text="Fetching Team" />;
+    return <LoadingSpinner text="Fetching Team Settings" />;
   }
 
   if (!hasRole) {
-    return <NotAuthorized text="no access to team" />;
+    return <NotAuthorized text="no access to team settings" />;
   }
 
   //TODO: Hier zweispaltig join team und create Team? Oder einfach Team join nur über invitation link ganz ohne extra page?
@@ -86,11 +85,17 @@ const TeamDetails: NextPage = () => {
       {data && !error && (
         <>
           <h1 className="text-3xl font-black">{data.name}</h1>
-          {typeof teamId === "string" && <VoteMood teamId={teamId} />}
+          {teamId && (
+            <CreateTeamInvitationLink
+              teamId={teamId.toString()}
+              tokenId={data.tokenId}
+              updateTeam={updateTeam}
+            />
+          )}
         </>
       )}
     </div>
   );
 };
 
-export default TeamDetails;
+export default TeamSettings;
