@@ -1,5 +1,7 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { ComponentType } from "react";
-
+import Cog6ToothIcon from "@heroicons/react/24/outline/Cog6ToothIcon";
 interface TeamQuickActionsProps {
   teamName: string;
 }
@@ -7,11 +9,15 @@ interface TeamQuickActionsProps {
 const TeamQuickActions: ComponentType<TeamQuickActionsProps> = ({
   teamName,
 }) => {
+  const router = useRouter();
   return (
-    <div className="flex flex-row gap-2 justify-start items-center">
-      <div className="text-xl">{teamName}</div>
-      <span className="flex-1"></span>
-      <button></button>
+    <div className="flex flex-row gap-2 justify-end items-center h-10 bg-blue">
+      <Link href={`${router.asPath}/settings`}>
+        <button className="btn">
+          Settings
+          <Cog6ToothIcon className="w-6 h-6" />
+        </button>
+      </Link>
     </div>
   );
 };

@@ -19,6 +19,7 @@ import UserRole from "@/shared/enum/userRole.enum";
 import NotAuthorized from "@/components/general/notAuthorized";
 import VoteMood from "@/components/mood/voteMood";
 import { useMyTeams } from "../../../hooks/useMyTeams";
+import TeamQuickActions from "../../../components/team/teamQuickActions";
 
 const TeamDetails: NextPage = () => {
   const router = useRouter();
@@ -85,15 +86,18 @@ const TeamDetails: NextPage = () => {
 
   //TODO: Hier zweispaltig join team und create Team? Oder einfach Team join nur über invitation link ganz ohne extra page?
   return (
-    <div className="container p-4 text-black dark:text-white">
-      {error && <div>Error: {error.message}</div>}
-      {data && !error && (
-        <>
-          <h1 className="text-3xl font-black">{data.name}</h1>
-          {typeof teamId === "string" && <VoteMood teamId={teamId} />}
-        </>
-      )}
-    </div>
+    <>
+      <TeamQuickActions teamName={data.name} />
+      <div className="container p-4 text-black dark:text-white">
+        {error && <div>Error: {error.message}</div>}
+        {data && !error && (
+          <>
+            <h1 className="text-3xl font-black">{data.name}</h1>
+            {typeof teamId === "string" && <VoteMood teamId={teamId} />}
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
