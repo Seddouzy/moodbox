@@ -1,4 +1,10 @@
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useFirestore, useUser } from "reactfire";
 
@@ -13,9 +19,8 @@ export const useMyTeams = () => {
       const teamsRef = collection(firestore, "teams");
       const teamsQuery = query(
         teamsRef,
-        where(`members.${user.data?.uid ?? ""}`, "==", true)
+        where(`members.${user.data.uid}`, "==", true)
       );
-      console.log(teamsQuery);
       const unsubscribe = onSnapshot(teamsQuery, (querySnapshot) => {
         const teams: any = [];
         querySnapshot.forEach((doc) => {
