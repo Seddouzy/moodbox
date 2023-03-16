@@ -18,6 +18,7 @@ import CreateTeamInvitationLink from "../../../components/team/createTeamInvitat
 import UserRole from "@/shared/enum/userRole.enum";
 import NotAuthorized from "@/components/general/notAuthorized";
 import VoteMood from "@/components/mood/voteMood";
+import { useMyTeams } from "../../../hooks/useMyTeams";
 
 const TeamDetails: NextPage = () => {
   const router = useRouter();
@@ -35,6 +36,9 @@ const TeamDetails: NextPage = () => {
     userId: user?.uid,
     role: UserRole.MEMBER,
   });
+
+  const myTeams = useMyTeams();
+  console.log(myTeams);
 
   const updateTeam = async (updateData: Record<string, any>) => {
     if (teamId) {

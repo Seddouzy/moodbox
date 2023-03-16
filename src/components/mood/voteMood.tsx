@@ -47,7 +47,7 @@ const VoteMood: ComponentType<VoteMoodProps> = ({ teamId }) => {
 
   return (
     <>
-      <h2 className="text-2xl text-center">What's your mood today?</h2>
+      <h2 className="text-2xl text-center">What&apos;s your mood today?</h2>
       <div className="p-8 flex flex-row item-center justify-center h-36">
         <VoteButton
           customClasses={[
