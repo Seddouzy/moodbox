@@ -13,6 +13,7 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import getConfig from "next/config";
+import { diffieHellman } from "crypto";
 
 interface UserDropdownProps {
   children: ReactNode;
@@ -30,10 +31,12 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
   };
 
   return (
-    <Popover className="relative">
+    <Popover className="relative" as="div">
       {({ open }) => (
         <>
-          <Popover.Button>{children}</Popover.Button>
+          <Popover.Button className="align-middle btnround">
+            {children}
+          </Popover.Button>
           <Transition
             as={Fragment}
             enter="transition ease-out duration-200"

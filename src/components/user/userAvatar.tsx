@@ -24,10 +24,9 @@ const UserAvatar: ComponentType<UserAvatarProps> = () => {
     <UserDropdown>
       <div className="relative rounded-full bg-yellow-500 h-12 w-12 flex flex-row justify-center items-center overflow-hidden">
         {user.data.photoURL ? (
-          <Image
-            alt={user.data.displayName ?? ""}
-            fill
-            src={user.data.photoURL ?? ""}
+          <div
+            className="absolute top-0 left-0 w-full h-full bg-cover"
+            style={{ backgroundImage: `url("${user.data.photoURL}")` }}
           />
         ) : (
           <UserIcon className="w-8 h-8 m-2" />
@@ -36,7 +35,7 @@ const UserAvatar: ComponentType<UserAvatarProps> = () => {
     </UserDropdown>
   ) : (
     <button
-      className="rounded-full p-2 bg-emerald-300 w-12 h-12 flex flex-row justify-center items-center"
+      className="rounded-full p-2 bg-yellow-500 w-12 h-12 flex flex-row justify-center items-center"
       onClick={() => signIn()}
     >
       <Image alt="Github" width={26} height={26} src="/logos/github-mark.svg" />
