@@ -1,28 +1,36 @@
-import { Popover } from "@headlessui/react";
-import { ComponentType, ReactNode } from "react";
+import { useRouter } from "next/router";
 
-interface TeamDropdownProps {
-  children: ReactNode;
-}
+interface TeamDropdownProps {}
 
-const TeamDropdown: ComponentType<TeamDropdownProps> = ({ children }) => {
-  return null;
-  /*<Popover className="relative">
-      <div>
-        <h1>Teams</h1>
-        <ul className="mt-4">
-          {teams.map((team) => (
-            <li
-              key={team.id}
-              className="px-3 py-2 rounded-lg hover:shadow:xl transition-all ease-in-out"
-            >
-              {team.name}
-            </li>
-          ))}
-        </ul>
+const TeamDropdown = ({ teams }) => {
+  const router = useRouter();
+
+  const handleTeamSelect = (teamId) => {
+    router.push(`/teams/${teamId}`);
+  };
+
+  return (
+    <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+      <div
+        className="py-1"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="menu-button"
+        tabIndex="-1"
+      >
+        {teams.map((team) => (
+          <button
+            key={team.id}
+            onClick={() => handleTeamSelect(team.id)}
+            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+            role="menuitem"
+          >
+            {team.name}
+          </button>
+        ))}
       </div>
-    </Popover>
-    */
+    </div>
+  );
 };
 
 export default TeamDropdown;

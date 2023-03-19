@@ -11,10 +11,8 @@ import { NextPage } from "next";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { httpsCallable } from "firebase/functions";
 import LoadingSpinner from "@/components/general/loadingSpinner";
 import { useHasRole } from "@/hooks/useHasRole";
-import CreateTeamInvitationLink from "../../../components/team/createTeamInvitationLink";
 import UserRole from "@/shared/enum/userRole.enum";
 import NotAuthorized from "@/components/general/notAuthorized";
 import VoteMood from "@/components/mood/voteMood";
@@ -84,7 +82,6 @@ const TeamDetails: NextPage = () => {
     return <NotAuthorized text="no access to team" />;
   }
 
-  //TODO: Hier zweispaltig join team und create Team? Oder einfach Team join nur über invitation link ganz ohne extra page?
   return (
     <>
       <TeamQuickActions teamName={data.name} />
