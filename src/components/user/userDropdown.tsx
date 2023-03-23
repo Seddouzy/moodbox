@@ -5,6 +5,7 @@ import { useAuth, useUser } from "reactfire";
 import useDarkMode from "./useDarkMode";
 
 import {
+  ChartBarIcon,
   CodeBracketIcon,
   HeartIcon,
   MoonIcon,
@@ -53,14 +54,14 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                   <a
                     key={"bla"}
                     href={"team"}
-                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7">
-                      <HeartIcon />
+                      <UserGroupIcon />
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
-                        Join or Create Team
+                        Create Team
                       </p>
                       <p className="text-sm text-gray-500 dark:text-white">
                         Go Team!
@@ -73,10 +74,10 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                   <a
                     key={"bla"}
                     href={"reports"}
-                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300  dark:text-white sm:h-7 sm:w-7">
-                      <UserGroupIcon />
+                      <ChartBarIcon />
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
@@ -94,7 +95,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                     href={publicRuntimeConfig.githubRepo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7">
                       <CodeBracketIcon />
