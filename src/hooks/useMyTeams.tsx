@@ -16,13 +16,18 @@ export const useMyTeams = () => {
   const firestore = useFirestore();
   const user = useUser();
 
+  /*
+
+  */
+
   useEffect(() => {
     const fetchTeams = async () => {
       if (user.data?.uid) {
         const teamsRef = collection(firestore, "teams");
+        console.log("USER", user.data?.uid.toString());
         const teamsQuery = query(
           teamsRef,
-          where(`members.${user.data.uid}`, "!=", null)
+          where(`members.${user.data.uid}`, ">", "")
         );
 
         console.log("why");
