@@ -6,6 +6,7 @@ import Image from "next/image";
 import UserDropdown from "./userDropdown";
 import { addDoc, collection, doc, getFirestore } from "firebase/firestore";
 import { useFirestore, useFirestoreDoc, useFirestoreDocData } from "reactfire";
+import LoadingSpinner from "../general/loadingSpinner";
 
 interface UserAvatarProps {}
 
@@ -19,6 +20,10 @@ const UserAvatar: ComponentType<UserAvatarProps> = () => {
     const provider = new GithubAuthProvider();
     await signInWithRedirect(auth, provider);
   };
+
+  if (user.status === "loading") {
+    return <LoadingSpinner />;
+  }
 
   return user.data ? (
     <UserDropdown>
