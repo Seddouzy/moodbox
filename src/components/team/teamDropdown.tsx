@@ -40,10 +40,10 @@ const TeamDropdown: ComponentType<TeamDropdownProps> = ({
   return teams?.length ? (
     <Combobox value={selectedTeam} onChange={setSelectedTeam}>
       <div className="relative mt-1">
-        <div className="relative w-full cursor-default overflow-hidden btn">
+        <div className="relative w-full cursor-default overflow-hidden btn  px-2">
           <Combobox.Input
             className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 bg-transparent focus:outline-none"
-            displayValue={(team) => team?.name}
+            displayValue={(team) => selectedTeam.name}
             onChange={(event) => setQuery(event.target.value)}
           />
           <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
