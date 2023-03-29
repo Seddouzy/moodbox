@@ -15,7 +15,6 @@ const TeamDropdown: ComponentType<TeamDropdownProps> = ({
   selectedTeamId,
 }) => {
   const router = useRouter();
-  console.log(teams, selectedTeamId);
   const [selectedTeam, setSelectedTeam] = useState(
     teams.find((team) => team.id === selectedTeamId) ?? teams[0]
   );
