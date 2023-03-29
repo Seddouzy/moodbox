@@ -1,3 +1,4 @@
+import SentimentByDay from "@/components/charts/sentimentByDay";
 import { ComponentType } from "react";
 
 const ShowVotes: ComponentType = () => (
@@ -10,6 +11,7 @@ const ShowVotes: ComponentType = () => (
       <h3>Bad: </h3>
       <ul></ul>
     </div>
+    <SentimentByDay sentiments={[]}/>
   </div>
 );
 

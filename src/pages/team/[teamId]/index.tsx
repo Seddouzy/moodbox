@@ -75,11 +75,11 @@ const TeamDetails: NextPage = () => {
   }, [teamId, firestore]);
 
   if (loading || hasRole === undefined) {
-    return <LoadingSpinner text="Fetching Team" />;
+    return <LoadingSpinner text="Fetching Team 😴" />;
   }
 
   if (!hasRole) {
-    return <NotAuthorized text="no access to team" />;
+    return <NotAuthorized text="no access to team 😭" />;
   }
 
   return (
