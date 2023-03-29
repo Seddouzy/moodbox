@@ -111,14 +111,16 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                   </a>
                 </div>
                 {/* <-- Logout --> */}
-                <div className="bg-gray-300 dark:bg-slate-700 p-4">
-                  <div className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
-                    <button
-                      onClick={() => logOut()}
-                      className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7"
-                    >
+                <div className="bg-gray-50 dark:bg-slate-700 p-4">
+                  <a
+                    onClick={() => logOut()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7">
                       <UserIcon />
-                    </button>
+                    </div>
                     <div className="ml-4">
                       <p className="text-sm fon-medium dark:text-white">
                         Logout
@@ -127,7 +129,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                         Bye!
                       </p>
                     </div>
-                  </div>
+                  </a>
                 </div>
                 {/* <-- Dark Mode --> */}
                 <div className="bg-gray-300 dark:bg-slate-700 dark:text-white p-4 justify-center">
