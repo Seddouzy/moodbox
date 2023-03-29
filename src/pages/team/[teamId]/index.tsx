@@ -37,7 +37,6 @@ const TeamDetails: NextPage = () => {
   });
 
   const myTeams = useMyTeams();
-  console.log(myTeams);
 
   const updateTeam = async (updateData: Record<string, any>) => {
     if (teamId) {

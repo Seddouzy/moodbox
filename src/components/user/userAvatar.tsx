@@ -1,6 +1,11 @@
 import { ComponentType } from "react";
 import { useAuth, useUser } from "reactfire";
-import { GithubAuthProvider, signInWithRedirect, signOut } from "firebase/auth";
+import {
+  GithubAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  signOut,
+} from "firebase/auth";
 import { UserIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import UserDropdown from "./userDropdown";
@@ -18,7 +23,13 @@ const UserAvatar: ComponentType<UserAvatarProps> = () => {
 
   const signIn = async () => {
     const provider = new GithubAuthProvider();
-    await signInWithRedirect(auth, provider);
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      // do something with the signed-in user
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (user.status === "loading") {

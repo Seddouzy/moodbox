@@ -17,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div className="h-screen">
       <Head>
         <title>Moodbox</title>
+        <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       {publicRuntimeConfig.firebaseConfig && (
         <FirebaseAppProvider

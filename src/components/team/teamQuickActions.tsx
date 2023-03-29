@@ -15,7 +15,7 @@ const TeamQuickActions: ComponentType<TeamQuickActionsProps> = ({
       <Link href={`${router.asPath}/settings`}>
         <button className="btn">
           Settings
-          <Cog6ToothIcon className="w-6 h-6" />
+          <Cog6ToothIcon className="w-5 h-5" />
         </button>
       </Link>
     </div>

@@ -4,6 +4,7 @@ import { Combobox, Transition } from "@headlessui/react";
 
 import ChevronUpDownIcon from "@heroicons/react/24/outline/ChevronUpDownIcon";
 import CheckIcon from "@heroicons/react/24/outline/CheckIcon";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 interface TeamDropdownProps {
   selectedTeamId?: string;
@@ -40,6 +41,7 @@ const TeamDropdown: ComponentType<TeamDropdownProps> = ({
     <Combobox value={selectedTeam} onChange={setSelectedTeam}>
       <div className="relative mt-1">
         <div className="relative w-full cursor-default overflow-hidden btn  px-2">
+          <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
           <Combobox.Input
             className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 bg-transparent focus:outline-none"
             displayValue={(team) => selectedTeam.name}

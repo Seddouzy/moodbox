@@ -34,15 +34,20 @@ const VoteMood: ComponentType<VoteMoodProps> = ({ teamId }) => {
     */
 
   const voteSentiment = async (sentiment: number) => {
-    await toast.promise(vote({ teamId, sentiment }), {
-      pending: "We're setting your vote",
-      success: "Vote sent 👌",
-      error: {
-        render({ data }) {
-          return `${(data as Error).message} 🤯`;
-        },
-      },
-    });
+    try {
+      await vote({ teamId, sentiment });
+      toast.success("Vote sent 👌");
+    } catch (error: any) {
+      if (
+        error.message ===
+        "User is not allowed to vote! Already voted in last 24 hours."
+      ) {
+        toast.error("You have already voted in the last 24 hours 🕛");
+      } else {
+        console.error(error);
+        toast.error("An error occurred while submitting your vote 🤯");
+      }
+    }
   };
 
   return (
