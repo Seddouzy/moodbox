@@ -51,8 +51,8 @@ const VoteMood: ComponentType<VoteMoodProps> = ({ teamId }) => {
   };
 
   return (
-    <>
-      <h2 className="text-2xl text-center">What&apos;s your mood today?</h2>
+    <div className="mt-4">
+      <h3 className="text-2xl text-center">What&apos;s your mood today?</h3>
       <div className="p-8 flex flex-row item-center justify-center h-36">
         <VoteButton
           customClasses={[
@@ -81,7 +81,7 @@ const VoteMood: ComponentType<VoteMoodProps> = ({ teamId }) => {
           icon={<HandThumbUpIcon className="h-6 w-6" />}
         />
       </div>
-    </>
+    </div>
   );
 };
 
