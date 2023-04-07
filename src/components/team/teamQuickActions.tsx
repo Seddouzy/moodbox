@@ -11,7 +11,7 @@ const TeamQuickActions: ComponentType<TeamQuickActionsProps> = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="flex flex-row gap-2 justify-between items-center pb-4 border-b border-slate-100 dark:border-slate-800">
+    <div className="flex flex-row gap-2 justify-between items-center pb-4 border-slate-100 dark:border-slate-800">
       <h2 className="text-3xl">{teamName}</h2>
       <div className="flex flex-row gap-2 items-center">
         <Link href={`${router.asPath}/settings`}>

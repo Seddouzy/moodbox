@@ -11,7 +11,7 @@ export const HeaderBar: ComponentType<HeaderBarProps> = () => {
   };
 
   return (
-    <div className="w-full dark:bg-slate-700 bg-white border-b border-slate-100 dark:border-slate-800">
+    <div className="w-full dark:bg-slate-700 bg-white border-slate-100 dark:border-slate-800">
       <div className="mx-auto container px-4 py-8 flex flex-row justify-between items-center gap-4 ">
         <div onClick={() => handleLogoSelect()}>
           <h1 className="text-4xl text-yellow-500 [text-shadow:0_0_1px_rgba(255,255,255,1)]">
