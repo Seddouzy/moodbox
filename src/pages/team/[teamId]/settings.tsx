@@ -17,6 +17,7 @@ import { useHasRole } from "@/hooks/useHasRole";
 import CreateTeamInvitationLink from "../../../components/team/createTeamInvitationLink";
 import UserRole from "@/shared/enum/userRole.enum";
 import NotAuthorized from "@/components/general/notAuthorized";
+import TeamMemberList from "@/components/team/teamMemberList";
 
 const TeamSettings: NextPage = () => {
   const router = useRouter();
