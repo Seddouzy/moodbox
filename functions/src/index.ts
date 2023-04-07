@@ -25,7 +25,7 @@ const hasVoteInLast24Hours = async (
     .where("createdAt", ">", yesterday)
     .where("userId", "==", context.auth?.uid)
     .get()
-    .catch((err) => {
+    .catch((err: Error) => {
       console.error("Error getting votes in team:", err);
       throw err;
     });

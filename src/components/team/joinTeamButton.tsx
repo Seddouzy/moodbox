@@ -32,6 +32,8 @@ const JoinTeamButton: ComponentType<Props> = ({
   useEffect(() => {
     if (userIsTeamMember && teamId) {
       router.push(`/team/${teamId}`);
+    } else {
+      setCanJoin(true);
     }
   }, [userIsTeamMember, teamId]);
 
@@ -51,6 +53,7 @@ const JoinTeamButton: ComponentType<Props> = ({
           },
         },
       })
+      .then(() => router.push(`/team/${teamId}`))
       .catch((err) => console.error(err));
     setLoading(false);
   };
