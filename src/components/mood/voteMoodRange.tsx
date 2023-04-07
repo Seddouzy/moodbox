@@ -79,7 +79,7 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
 
   return (
     <button
-      className="p-2 rounded-full shadow-lg w-full cursor-none flex flex-row"
+      className="p-2 rounded-xl shadow-lg w-full cursor-none flex flex-row"
       style={{
         background: color,
       }}
@@ -88,9 +88,9 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
       onClick={voteSentiment}
     >
       <div
-        className="p-4 rounded-full bg-slate-700 -translate-x-1/2 pointer-events-none"
+        className="p-4 rounded-lg bg-slate-700 -translate-x-1/2 pointer-events-none"
         style={{
-          marginLeft: `${(value ?? 0) * 100}%`,
+          marginLeft: `max(2rem, min(${(value ?? 0) * 100}%, calc(100% - 2rem)`,
         }}
       >
         <HandThumbUpIcon
