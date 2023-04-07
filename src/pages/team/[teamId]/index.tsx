@@ -18,6 +18,7 @@ import NotAuthorized from "@/components/general/notAuthorized";
 import VoteMood from "@/components/mood/voteMood";
 import { useMyTeams } from "../../../hooks/useMyTeams";
 import TeamQuickActions from "../../../components/team/teamQuickActions";
+import VoteMoodRange from "../../../components/mood/voteMoodRange";
 
 const TeamDetails: NextPage = () => {
   const router = useRouter();
@@ -84,13 +85,10 @@ const TeamDetails: NextPage = () => {
   return (
     <>
       <TeamQuickActions teamName={data.name} />
-      <div className="container p-4 text-black dark:text-white">
+      <div className="">
         {error && <div>Error: {error.message}</div>}
         {data && !error && (
-          <>
-            <h1 className="text-3xl font-black">{data.name}</h1>
-            {typeof teamId === "string" && <VoteMood teamId={teamId} />}
-          </>
+          <>{typeof teamId === "string" && <VoteMoodRange teamId={teamId} />}</>
         )}
       </div>
     </>

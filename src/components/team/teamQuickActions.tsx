@@ -11,13 +11,16 @@ const TeamQuickActions: ComponentType<TeamQuickActionsProps> = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="flex flex-row gap-2 justify-end items-center h-10 bg-blue">
-      <Link href={`${router.asPath}/settings`}>
-        <button className="btn">
-          Settings
-          <Cog6ToothIcon className="w-5 h-5" />
-        </button>
-      </Link>
+    <div className="flex flex-row gap-2 justify-between items-center pb-4 border-b border-slate-100 dark:border-slate-800">
+      <h2 className="text-3xl">{teamName}</h2>
+      <div className="flex flex-row gap-2 items-center">
+        <Link href={`${router.asPath}/settings`}>
+          <button className="btn">
+            Settings
+            <Cog6ToothIcon className="w-6 h-6" />
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
