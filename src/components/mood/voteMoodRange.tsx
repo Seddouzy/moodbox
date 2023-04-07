@@ -121,7 +121,7 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
       onMouseMove={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={voteSentiment}
-      disabled={canVote.state}
+      disabled={!canVote.state}
     >
       <div
         className="p-4 rounded-lg bg-slate-700 -translate-x-1/2 pointer-events-none"
