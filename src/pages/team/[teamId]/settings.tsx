@@ -17,6 +17,7 @@ import { useHasRole } from "@/hooks/useHasRole";
 import CreateTeamInvitationLink from "../../../components/team/createTeamInvitationLink";
 import UserRole from "@/shared/enum/userRole.enum";
 import NotAuthorized from "@/components/general/notAuthorized";
+import TeamMemberList from "@/components/team/teamMemberList";
 
 const TeamSettings: NextPage = () => {
   const router = useRouter();
@@ -92,6 +93,10 @@ const TeamSettings: NextPage = () => {
               updateTeam={updateTeam}
             />
           )}
+          <div>
+            <h1 className="text-3xl font-black">{"Team Member List"}</h1>
+            {teamId && <TeamMemberList teamId={teamId.toString()} />}
+          </div>
         </>
       )}
     </div>

@@ -22,7 +22,7 @@ export default function Reports({ Component, pageProps }: AppProps) {
   const hasRole = useHasRole({
     teamId: teamId as string,
     userId: user?.uid,
-    role: UserRole.OWNER,
+    role: UserRole.MEMBER,
   });
 
   if (loading || hasRole === undefined) {
