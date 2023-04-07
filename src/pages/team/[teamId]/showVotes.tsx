@@ -11,7 +11,7 @@ const ShowVotes: ComponentType = () => (
       <h3>Bad: </h3>
       <ul></ul>
     </div>
-    <SentimentByDay sentiments={[]}/>
+    <SentimentByDay sentiments={[]} />
   </div>
 );
 
