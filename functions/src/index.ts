@@ -16,7 +16,7 @@ const userIsAuthenticatedCheck = (context: functions.https.CallableContext) => {
 const hasVoteInLast24Hours = async (
   teamId: string,
   context: functions.https.CallableContext
-) => {
+): Promise<{ state: boolean; date: Date | null }> => {
   // retrieve all votes in team from last 24 hours
   const now = new Date();
   const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000); // Subtract 24 hours from the current time
@@ -30,9 +30,10 @@ const hasVoteInLast24Hours = async (
       throw err;
     });
   if (querySnapshot.empty) {
-    return false;
+    return { state: false, date: null };
   }
-  return true;
+  const firstDoc = querySnapshot.docs[0];
+  return { state: true, date: firstDoc.get("createdAt") };
 };
 
 export const canVote = functions.https.onCall(
@@ -44,8 +45,8 @@ export const canVote = functions.https.onCall(
       `user ${context.auth?.uid} requesting to vote on team ${teamId}`
     );
 
-    const allowedToVote = !(await hasVoteInLast24Hours(teamId, context));
-    if (allowedToVote) {
+    const hasVote = await hasVoteInLast24Hours(teamId, context);
+    if (!hasVote.state) {
       return {
         message: `User ${context.auth?.uid} is allowed to vote in team ${teamId}`,
         state: true,
@@ -54,6 +55,7 @@ export const canVote = functions.https.onCall(
     return {
       message: `User ${context.auth?.uid} is not allowed to vote in team ${teamId}. Already voted in last 24 hours.`,
       state: false,
+      lastVote: hasVote.date,
     };
   }
 );

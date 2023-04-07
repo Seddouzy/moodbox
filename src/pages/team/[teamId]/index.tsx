@@ -19,6 +19,7 @@ import VoteMood from "@/components/mood/voteMood";
 import { useMyTeams } from "../../../hooks/useMyTeams";
 import TeamQuickActions from "../../../components/team/teamQuickActions";
 import VoteMoodRange from "../../../components/mood/voteMoodRange";
+import { httpsCallable } from "firebase/functions";
 
 const TeamDetails: NextPage = () => {
   const router = useRouter();
@@ -85,10 +86,13 @@ const TeamDetails: NextPage = () => {
   return (
     <>
       <TeamQuickActions teamName={data.name} />
-      <div className="">
+      <div className="mt-4">
         {error && <div>Error: {error.message}</div>}
         {data && !error && (
-          <>{typeof teamId === "string" && <VoteMoodRange teamId={teamId} />}</>
+          <>
+            <div className="text-lg mb-4">What&apos;s your mood today?</div>
+            {typeof teamId === "string" && <VoteMoodRange teamId={teamId} />}
+          </>
         )}
       </div>
     </>

@@ -1,5 +1,5 @@
 import { httpsCallable } from "firebase/functions";
-import { ComponentType, useState, MouseEvent } from "react";
+import { ComponentType, useState, MouseEvent, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useFirestore, useFunctions } from "reactfire";
 import HandThumbUpIcon from "@heroicons/react/24/outline/HandThumbUpIcon";
@@ -13,9 +13,29 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
   const firestore = useFirestore();
   const functions = useFunctions();
   const vote = httpsCallable(functions, "vote");
+  const canVoteFunction = httpsCallable<
+    { teamId: string },
+    { message: string; state: boolean; lastVote?: Date }
+  >(functions, "canVote");
 
   const [value, setValue] = useState<number>(0.5);
   const [color, setColor] = useState<string>(colors.slate[600]);
+  const [canVote, setCanVote] = useState<{
+    message: string;
+    state: boolean;
+    lastVote?: Date;
+  }>({
+    message: "Initiating...",
+    state: false,
+  });
+
+  useEffect(() => {
+    canVoteFunction({ teamId })
+      .then((res) => {
+        setCanVote(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const hexToRgb = (hex: string): number[] => {
     const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -31,7 +51,9 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
   const colorArr = [
     colors.red[400],
     colors.amber[400],
-    colors.emerald[500],
+    colors.yellow[400],
+    colors.lime[400],
+    colors.green[500],
   ].map((hex) => hexToRgb(hex));
 
   const handleMouseEnter = (event: MouseEvent<HTMLButtonElement>) => {
@@ -76,16 +98,30 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
       return `rgb(${r}, ${g}, ${b})`;
     }
   };
+  if (!canVote.state) {
+    return (
+      <>
+        <div>{canVote.message}</div>
+        {canVote.lastVote && (
+          <small>
+            Last Vote:{" "}
+            <span>{new Date(canVote.lastVote)?.toLocaleDateString()}</span>
+          </small>
+        )}
+      </>
+    );
+  }
 
   return (
     <button
-      className="p-2 rounded-xl shadow-lg w-full cursor-none flex flex-row"
+      className="p-2 rounded-xl shadow-lg w-full flex flex-row"
       style={{
         background: color,
       }}
       onMouseMove={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={voteSentiment}
+      disabled={canVote.state}
     >
       <div
         className="p-4 rounded-lg bg-slate-700 -translate-x-1/2 pointer-events-none"
@@ -95,7 +131,7 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
       >
         <HandThumbUpIcon
           className="w-8 h-8 text-white"
-          style={{ rotate: `${value * 180 + 180}deg` }}
+          style={{ rotate: `${value * 180 + 180}deg`, color }}
         />
       </div>
     </button>
