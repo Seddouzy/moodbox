@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import { useUser } from "reactfire";
 
 admin.initializeApp();
 
@@ -93,8 +94,14 @@ export const memberJoin = functions.https.onCall(
     const teamRef = admin.firestore().collection("teams").doc(teamId);
     const membersRef = teamRef.collection("members");
     const team = await teamRef.get();
+    const user = useUser();
     if (team.data()?.tokenId === tokenId) {
-      await membersRef.doc(userId).set({ joinedAt: new Date() });
+      await membersRef.doc(userId).set({
+        joinedAt: new Date(),
+        role: "member",
+        picture: user.data?.photoURL,
+        email: user.data?.displayName,
+      });
     } else {
       throw new functions.https.HttpsError(
         "invalid-argument",
