@@ -36,26 +36,23 @@ const TeamMemberList: ComponentType<TeamMemberListProps> = ({ teamId }) => {
   }, [teamId]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mp-4 rounded-xl bg-slate-100 dark:bg-slate-800 dark:text-white p-8">
       {members.map((member: any) => (
-        <div
-          key={member.id}
-          className="flex flex-row items-center justify-between border-b p-4"
-        >
+        <div key={member.id} className="flex flex-row p-4">
           <div className="relative rounded-full bg-yellow-500 h-12 w-12 flex flex-row justify-center items-center overflow-hidden">
-            {member.data?.pircture ? (
+            {member.picture ? (
               <div
                 className="absolute top-0 left-0 w-full h-full bg-cover"
                 style={{
-                  backgroundImage: `url("${member.data.picture}")`,
+                  backgroundImage: `url("${member.picture}")`,
                 }}
               />
             ) : (
               <UserIcon className="w-8 h-8 m-2" />
             )}
           </div>
-          <div>{member.name}</div>
-          <div>{member.role}</div>
+          <div className="flex p-4">{member.displayName}</div>
+          <div className="flex p-4">{member.role}</div>
         </div>
       ))}
     </div>

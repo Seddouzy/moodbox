@@ -94,9 +94,7 @@ const TeamSettings: NextPage = () => {
             />
           )}
           <div>
-            <h1 className="text-3xl font-black">
-              {"Team Member List" && data.name}
-            </h1>
+            <h1 className="text-3xl font-black">{"Team Member List"}</h1>
             {teamId && <TeamMemberList teamId={teamId.toString()} />}
           </div>
         </>
