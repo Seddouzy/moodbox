@@ -15,6 +15,8 @@ import {
 } from "@heroicons/react/24/outline";
 import getConfig from "next/config";
 import { diffieHellman } from "crypto";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface UserDropdownProps {
   children: ReactNode;
@@ -27,8 +29,12 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
   const [colorTheme, setTheme] = useDarkMode();
   const auth = useAuth();
 
-  const logOut = async () => {
-    await signOut(auth);
+  const router = useRouter();
+
+  const handleTeamSelect = () => {
+    if (router.asPath !== `/team`) {
+      router.push(`/team`);
+    }
   };
 
   return (
@@ -52,8 +58,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="bg-gray-50 dark:bg-slate-700 p-4">
                   <a
-                    key={"bla"}
-                    href={"team"}
+                    href="/team"
                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7">
