@@ -19,7 +19,7 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
   >(functions, "canVote");
 
   const [value, setValue] = useState<number>(0.5);
-  const [color, setColor] = useState<string>(colors.slate[600]);
+  const [color, setColor] = useState<string | null>(null);
   const [canVote, setCanVote] = useState<{
     message: string;
     state: boolean;
@@ -67,7 +67,7 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
 
   const handleMouseLeave = () => {
     setValue(0.5);
-    setColor(colors.slate[600]);
+    setColor(null);
   };
 
   const voteSentiment = async () => {
@@ -114,9 +114,9 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
 
   return (
     <button
-      className="p-2 rounded-xl shadow-lg w-full flex flex-row"
+      className="p-2 rounded-xl shadow-lg w-full flex flex-row bg-slate-200 dark:bg-slate-600"
       style={{
-        background: color,
+        background: color as string,
       }}
       onMouseMove={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -124,14 +124,17 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
       disabled={!canVote.state}
     >
       <div
-        className="p-4 rounded-lg bg-slate-700 -translate-x-1/2 pointer-events-none"
+        className="p-4 rounded-lg bg-slate-700 -translate-x-1/2 hover:outline outline-4 outline-offset-8 outline-slate-700"
         style={{
           marginLeft: `max(2rem, min(${(value ?? 0) * 100}%, calc(100% - 2rem)`,
         }}
       >
         <HandThumbUpIcon
-          className="w-8 h-8 text-white"
-          style={{ rotate: `${value * 180 + 180}deg`, color }}
+          className="w-8 h-8 text-slate-200 dark:text-slate-600"
+          style={{
+            rotate: `${value * 180 + 180}deg`,
+            color: color as string,
+          }}
         />
       </div>
     </button>
