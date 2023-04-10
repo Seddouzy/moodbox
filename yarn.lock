@@ -1284,7 +1284,7 @@
   "resolved" "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz"
   "version" "1.0.6"
 
-"cookie@0.5.0":
+"cookie@^0.5.0", "cookie@0.5.0":
   "integrity" "sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw=="
   "resolved" "https://registry.npmjs.org/cookie/-/cookie-0.5.0.tgz"
   "version" "0.5.0"
@@ -1979,7 +1979,7 @@
     "locate-path" "^6.0.0"
     "path-exists" "^4.0.0"
 
-"firebase-admin@^10.0.0 || ^11.0.0":
+"firebase-admin@^11.0.0", "firebase-admin@^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0":
   "integrity" "sha512-Kvjs+u/EHs+8B4pNOehbXkazEVMNmTQjkz+B5vUIvWWWR44GOiZj4lBf/hM5An4k3rFkBfO6G4s0kWi7QMOm3g=="
   "resolved" "https://registry.npmjs.org/firebase-admin/-/firebase-admin-11.6.0.tgz"
   "version" "11.6.0"
@@ -1996,18 +1996,28 @@
     "@google-cloud/firestore" "^6.4.0"
     "@google-cloud/storage" "^6.5.2"
 
-"firebase-functions@^4.2.1":
-  "integrity" "sha512-+NjbI6TD3ivuoT7B3oC4iwRlt41QDTcYowo3TO88ZyMHmjCzlrbiuAjiPzz/zfwgi3+GCoP1tztHOQHhDGYE5w=="
-  "resolved" "https://registry.npmjs.org/firebase-functions/-/firebase-functions-4.2.1.tgz"
-  "version" "4.2.1"
+"firebase-frameworks@^0.6.2":
+  "integrity" "sha512-FDlnqCK0SN1C9fr3doiSu+VX1LlPe06qomQ/vUZ5J+IyruqIOX5R4Mx3Or9GT/FwLoX9To0qfTAvBaYqF7v89g=="
+  "resolved" "https://registry.npmjs.org/firebase-frameworks/-/firebase-frameworks-0.6.2.tgz"
+  "version" "0.6.2"
+  dependencies:
+    "cookie" "^0.5.0"
+    "lru-cache" "^7.14.0"
+    "tslib" "^2.3.1"
+
+"firebase-functions@^3.23.0", "firebase-functions@^3.24.1":
+  "integrity" "sha512-GYhoyOV0864HFMU1h/JNBXYNmDk2MlbvU7VO/5qliHX6u/6vhSjTJjlyCG4leDEI8ew8IvmkIC5QquQ1U8hAuA=="
+  "resolved" "https://registry.npmjs.org/firebase-functions/-/firebase-functions-3.24.1.tgz"
+  "version" "3.24.1"
   dependencies:
     "@types/cors" "^2.8.5"
     "@types/express" "4.17.3"
     "cors" "^2.8.5"
     "express" "^4.17.1"
+    "lodash" "^4.17.14"
     "node-fetch" "^2.6.7"
 
-"firebase@^9.0.0", "firebase@^9.16.0":
+"firebase@^9.0.0", "firebase@^9.16.0", "firebase@^9.9.0":
   "integrity" "sha512-nNLpDwJvfP3crRc6AjnHH46TAkFzk8zimNVMJfYRCwAf5amOSGyU8duuc3IsJF6dQGiYLSfzfr2tMCsQa+rhKQ=="
   "resolved" "https://registry.npmjs.org/firebase/-/firebase-9.16.0.tgz"
   "version" "9.16.0"
@@ -2875,7 +2885,7 @@
   "resolved" "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
   "version" "4.6.2"
 
-"lodash@^4.17.15", "lodash@^4.17.21":
+"lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.21":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
@@ -2903,6 +2913,11 @@
   "version" "6.0.0"
   dependencies:
     "yallist" "^4.0.0"
+
+"lru-cache@^7.14.0":
+  "integrity" "sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA=="
+  "resolved" "https://registry.npmjs.org/lru-cache/-/lru-cache-7.18.3.tgz"
+  "version" "7.18.3"
 
 "lru-cache@~4.0.0":
   "integrity" "sha512-uQw9OqphAGiZhkuPlpFGmdTU2tEuhxTourM/19qGJrxBPHAr/f8BT1a0i/lOclESnGatdJG/UCkP9kZB/Lh1iw=="
@@ -4002,7 +4017,7 @@
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.1.0.tgz"
   "version" "2.1.0"
 
-"tslib@^2.1.0":
+"tslib@^2.1.0", "tslib@^2.3.1":
   "integrity" "sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz"
   "version" "2.5.0"
