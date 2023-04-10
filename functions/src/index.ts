@@ -85,24 +85,36 @@ export const vote = functions.https.onCall(
 export const memberJoin = functions.https.onCall(
   async (data: any, context: functions.https.CallableContext) => {
     // TODO: Check if we even need to send the userId -> can be retrieved via context
-    const { userId, teamId, tokenId } = data;
+    const { role, userId, teamId, tokenId, userName, userEmail, userPhoto } =
+      data;
     userIsAuthenticatedCheck(context);
 
     functions.logger.log(
       `user ${userId} requesting to join team ${teamId} with token ${tokenId}`
     );
+    const user = useUser();
+    functions.logger.warn(`User Photo: ${context.auth?.token.picture}`);
+    functions.logger.warn(`User Photo: ${context.auth?.token.email}`);
+    functions.logger.warn(`User Photo: ${context.auth?.uid}`);
+    functions.logger.warn(`USER USER stuff: ${user.data?.displayName}`);
+    functions.logger.warn(`USER USER stuff: ${user.data?.photoURL}`);
 
     // Add the user to the team in the "members" collection
-    const teamRef = admin.firestore().collection("teams").doc(teamId);
-    const membersRef = teamRef.collection("members");
+    const teamMembersCurrentRef = admin
+      .firestore()
+      .collection(`teams/${teamId}/members/${userId}`);
+    const teamRef = admin.firestore().collection(`teams`).doc(teamId);
+    //const membersRef = teamRef.collection(`members`);
+    //const myUserMembersRef = membersRef.doc(userId);
     const team = await teamRef.get();
-    const user = useUser();
     if (team.data()?.tokenId === tokenId) {
-      await membersRef.doc(userId).set({
+      await teamMembersCurrentRef.add({
+        role,
+        userName,
+        userEmail,
+        userPhoto,
+        userId,
         joinedAt: new Date(),
-        role: "member",
-        picture: user.data?.photoURL,
-        email: user.data?.displayName,
       });
     } else {
       throw new functions.https.HttpsError(

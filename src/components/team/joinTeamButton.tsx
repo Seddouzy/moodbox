@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import ArrowPathIcon from "@heroicons/react/24/outline/ArrowPathIcon";
 import LoadingSpinner from "../general/loadingSpinner";
 import NotLoggedin from "../general/notLoggedin";
+import { current } from "tailwindcss/colors";
 
 interface Props {
   teamId: string;
@@ -24,7 +25,11 @@ const JoinTeamButton: ComponentType<Props> = ({
   const router = useRouter();
   const functions = useFunctions();
   const { status, data: user } = useUser();
+  const currentUser = useUser();
   const memberJoin = httpsCallable(functions, "memberJoin");
+  const userEmail = currentUser.data?.email;
+  const userName = currentUser.data?.displayName;
+  const userPhoto = currentUser.data?.photoURL;
 
   const [canJoin, setCanJoin] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -43,16 +48,27 @@ const JoinTeamButton: ComponentType<Props> = ({
   const handleJoinClick = async () => {
     setLoading(true);
     await toast
-      .promise(memberJoin({ userId: user?.uid, teamId, tokenId }), {
-        pending: `Trying to join Team ${teamId}`,
-        success: `Joined Team ${teamId}`,
-        error: {
-          render({ data }) {
-            const err = data as any;
-            return `${err.code}: ${err.message} 🤯`;
+      .promise(
+        memberJoin({
+          role: "member",
+          userId: user?.uid,
+          teamId,
+          tokenId,
+          userName: userName,
+          userPhoto: userPhoto,
+          userEmail: userEmail,
+        }),
+        {
+          pending: `Trying to join Team ${teamId}`,
+          success: `Joined Team ${teamId}`,
+          error: {
+            render({ data }) {
+              const err = data as any;
+              return `${err.code}: ${err.message} 🤯`;
+            },
           },
-        },
-      })
+        }
+      )
       .then(() => router.push(`/team/${teamId}`))
       .catch((err) => console.error(err));
     setLoading(false);
