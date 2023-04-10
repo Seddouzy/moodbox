@@ -1,6 +1,5 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { useUser } from "reactfire";
 
 admin.initializeApp();
 
@@ -85,35 +84,30 @@ export const vote = functions.https.onCall(
 export const memberJoin = functions.https.onCall(
   async (data: any, context: functions.https.CallableContext) => {
     // TODO: Check if we even need to send the userId -> can be retrieved via context
-    const { role, userId, teamId, tokenId, userName, userEmail, userPhoto } =
-      data;
+    const { userId, teamId, tokenId } = data;
     userIsAuthenticatedCheck(context);
 
     functions.logger.log(
       `user ${userId} requesting to join team ${teamId} with token ${tokenId}`
     );
-    const user = useUser();
+
     functions.logger.warn(`User Photo: ${context.auth?.token.picture}`);
     functions.logger.warn(`User Photo: ${context.auth?.token.email}`);
     functions.logger.warn(`User Photo: ${context.auth?.uid}`);
-    functions.logger.warn(`USER USER stuff: ${user.data?.displayName}`);
-    functions.logger.warn(`USER USER stuff: ${user.data?.photoURL}`);
 
     // Add the user to the team in the "members" collection
-    const teamMembersCurrentRef = admin
+    /*const teamMembersCurrentRef = admin
       .firestore()
-      .collection(`teams/${teamId}/members/${userId}`);
-    const teamRef = admin.firestore().collection(`teams`).doc(teamId);
-    //const membersRef = teamRef.collection(`members`);
-    //const myUserMembersRef = membersRef.doc(userId);
+      .collection(`teams/${teamId}/members/${userId}`);*/
+    const teamRef = admin.firestore().collection("teams").doc(teamId);
+    const membersRef = teamRef.collection("members");
     const team = await teamRef.get();
     if (team.data()?.tokenId === tokenId) {
-      await teamMembersCurrentRef.add({
-        role,
-        userName,
-        userEmail,
-        userPhoto,
-        userId,
+      await membersRef.doc(userId).set({
+        role: "member",
+        userPhoto: context.auth?.token.picture,
+        userEmail: context.auth?.token.email,
+        userId: context.auth?.uid,
         joinedAt: new Date(),
       });
     } else {

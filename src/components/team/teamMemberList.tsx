@@ -40,18 +40,19 @@ const TeamMemberList: ComponentType<TeamMemberListProps> = ({ teamId }) => {
       {members.map((member: any) => (
         <div key={member.id} className="flex flex-row p-4">
           <div className="relative rounded-full bg-yellow-500 h-12 w-12 flex flex-row justify-center items-center overflow-hidden">
-            {member.picture ? (
+            {member.userPhoto ? (
               <div
                 className="absolute top-0 left-0 w-full h-full bg-cover"
                 style={{
-                  backgroundImage: `url("${member.picture}")`,
+                  backgroundImage: `url("${member.userPhoto.toString()}")`,
                 }}
               />
             ) : (
               <UserIcon className="w-8 h-8 m-2" />
             )}
           </div>
-          <div className="flex p-4">{member.displayName}</div>
+          <div className="flex p-4">{member.userEmail}</div>
+          <div className="flex p-4">{member.userId}</div>
           <div className="flex p-4">{member.role}</div>
         </div>
       ))}

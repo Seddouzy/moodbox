@@ -20,9 +20,10 @@ const CreateTeam = () => {
       };
       const newMemberRef = {
         role: UserRole.OWNER,
-        email: user?.email,
+        userEmail: user?.email,
         displayName: user?.displayName,
-        picture: user?.photoURL,
+        userPhoto: user?.photoURL,
+        userId: user?.uid,
       };
 
       const teamRef = collection(firestore, "teams");

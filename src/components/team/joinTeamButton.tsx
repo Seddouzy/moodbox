@@ -50,13 +50,9 @@ const JoinTeamButton: ComponentType<Props> = ({
     await toast
       .promise(
         memberJoin({
-          role: "member",
           userId: user?.uid,
           teamId,
           tokenId,
-          userName: userName,
-          userPhoto: userPhoto,
-          userEmail: userEmail,
         }),
         {
           pending: `Trying to join Team ${teamId}`,
