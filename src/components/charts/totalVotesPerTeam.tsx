@@ -1,8 +1,6 @@
 import { ComponentType } from "react";
 
-interface TotalVotesPerTeamProps {
-  sentiments: { sentimentAvg: number; date: Date }[];
-}
+interface TotalVotesPerTeamProps {}
 
 const TotalVotesPerTeam: ComponentType<TotalVotesPerTeamProps> = ({}) => {
   return <></>;
