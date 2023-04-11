@@ -68,26 +68,6 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                     </div>
                   </a>
                 </div>
-                {/* <-- Team statistics --> */}
-                <div className="bg-gray-50 dark:bg-slate-700 dark:text-white p-4">
-                  <a
-                    key={"bla"}
-                    href={"reports"}
-                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                  >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300  dark:text-white sm:h-7 sm:w-7">
-                      <ChartBarIcon />
-                    </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
-                        Team
-                      </p>
-                      <p className="text-sm text-gray-500 dark:text-white">
-                        Statistics
-                      </p>
-                    </div>
-                  </a>
-                </div>
                 {/* <-- Source Code--> */}
                 <div className="bg-gray-50 dark:bg-slate-700 p-4">
                   <a
