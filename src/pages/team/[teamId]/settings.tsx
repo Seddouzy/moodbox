@@ -81,7 +81,7 @@ const TeamSettings: NextPage = () => {
 
   //TODO: Hier zweispaltig join team und create Team? Oder einfach Team join nur über invitation link ganz ohne extra page?
   return (
-    <div className="container p-4 text-black dark:text-white">
+    <div className="container p-4 text-black dark:text-white dark:bg-slate-700">
       {error && <div>Error: {error.message}</div>}
       {data && !error && (
         <>

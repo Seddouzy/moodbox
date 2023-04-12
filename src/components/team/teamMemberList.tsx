@@ -38,7 +38,7 @@ const TeamMemberList: ComponentType<TeamMemberListProps> = ({ teamId }) => {
   return (
     <div className="flex flex-col mp-4 rounded-xl bg-slate-100 dark:bg-slate-800 dark:text-white p-8">
       {members.map((member: any) => (
-        <div key={member.id} className="flex flex-row p-4">
+        <div key={member.id} className="flex flex-row md:flex-row p-4">
           <div className="relative rounded-full bg-yellow-500 h-12 w-12 flex flex-row justify-center items-center overflow-hidden">
             {member.userPhoto ? (
               <div
@@ -51,9 +51,11 @@ const TeamMemberList: ComponentType<TeamMemberListProps> = ({ teamId }) => {
               <UserIcon className="w-8 h-8 m-2" />
             )}
           </div>
-          <div className="flex p-4">{member.userEmail}</div>
-          <div className="flex p-4">{member.userId}</div>
-          <div className="flex p-4">{member.role}</div>
+          <div className="flex flex-col justify-center">
+            <div className="flex p-2">{member.userEmail}</div>
+            <div className="flex p-2">{member.userId}</div>
+            <div className="flex p-2">{member.role}</div>
+          </div>
         </div>
       ))}
     </div>
