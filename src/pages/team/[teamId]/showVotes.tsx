@@ -1,5 +1,4 @@
 import SentimentByDay from "@/components/charts/sentimentByDay";
-import TotalVotesPerTeam from "@/components/charts/totalVotesPerTeam";
 import { ComponentType } from "react";
 
 const ShowVotes: ComponentType = () => (
@@ -12,7 +11,6 @@ const ShowVotes: ComponentType = () => (
       <h3>Bad: </h3>
       <ul></ul>
     </div>
-    <TotalVotesPerTeam />
     <SentimentByDay sentiments={[]} />
   </div>
 );
