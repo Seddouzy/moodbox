@@ -23,7 +23,7 @@ const TeamReports: NextPage = () => {
   const hasRole = useHasRole({
     teamId: teamId as string,
     userId: user?.uid,
-    role: UserRole.OWNER,
+    role: UserRole.MEMBER,
   });
 
   const updateTeam = async (updateData: Record<string, any>) => {
@@ -62,11 +62,11 @@ const TeamReports: NextPage = () => {
   }, [teamId, firestore]);
 
   if (loading || hasRole === undefined) {
-    return <LoadingSpinner text="Fetching Team Settings" />;
+    return <LoadingSpinner text="Fetching Team reports" />;
   }
 
   if (!hasRole) {
-    return <NotAuthorized text="no access to team settings" />;
+    return <NotAuthorized text="no access to team reports" />;
   }
 
   return (
