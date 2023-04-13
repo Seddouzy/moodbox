@@ -1,7 +1,4 @@
-import {
-  useFirestore,
-  useUser,
-} from "reactfire";
+import { useFirestore, useUser } from "reactfire";
 
 import { useRouter } from "next/router";
 import { NextPage } from "next";
@@ -74,10 +71,9 @@ const TeamSettings: NextPage = () => {
     return <NotAuthorized text="no access to team settings" />;
   }
 
-  //TODO: Hier zweispaltig join team und create Team? Oder einfach Team join nur über invitation link ganz ohne extra page?
   return (
     <div>
-    <TeamQuickActions teamName={data.name} />
+      <TeamQuickActions teamName={data.name} />
       <div className="container p-4 dark:bg-slate-700 h-full min-h-screen">
         {error && <div>Error: {error.message}</div>}
         {data && !error && (
@@ -89,9 +85,7 @@ const TeamSettings: NextPage = () => {
                 updateTeam={updateTeam}
               />
             )}
-            <div>
-              {teamId && <TeamMemberList teamId={teamId.toString()}/>}
-            </div>
+            <div>{teamId && <TeamMemberList teamId={teamId.toString()} />}</div>
           </>
         )}
       </div>

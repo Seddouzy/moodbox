@@ -14,9 +14,7 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import getConfig from "next/config";
-import { diffieHellman } from "crypto";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 interface UserDropdownProps {
   children: ReactNode;
@@ -56,7 +54,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7">
-                      <UserGroupIcon />
+                      <UserGroupIcon className="w-6 h-6" />
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
@@ -77,7 +75,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7">
-                      <CodeBracketIcon />
+                      <CodeBracketIcon className="w-6 h-6" />
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
@@ -98,7 +96,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-gray-300 dark:text-white sm:h-7 sm:w-7">
-                      <UserIcon />
+                      <UserIcon className="w-6 h-6" />
                     </div>
                     <div className="ml-4">
                       <p className="text-sm fon-medium dark:text-white">
@@ -118,7 +116,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                         onClick={() => setTheme("dark")}
                         className="flex h-10 w-10 shrink-0  text-gray-600 sm:h-7 sm:w-7"
                       >
-                        <MoonIcon />
+                        <MoonIcon className="w-6 h-6" />
                       </button>
                     </div>
                   ) : (

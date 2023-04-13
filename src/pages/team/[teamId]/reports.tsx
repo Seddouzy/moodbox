@@ -69,20 +69,19 @@ const TeamReports: NextPage = () => {
     return <NotAuthorized text="no access to team settings" />;
   }
 
-  //TODO: Hier zweispaltig join team und create Team? Oder einfach Team join nur über invitation link ganz ohne extra page?
   return (
     <div>
       <TeamQuickActions teamName={data.name} />
       <div className="container p-4 text-black dark:text-white">
         {error && <div>Error: {error.message}</div>}
-        {data && !error && teamId && ( // add a check for teamId
-          <>
-              {teamId && <TotalVotesPerTeam teamId={teamId.toString()} />}
-          </>
-        )}
+        {data &&
+          !error &&
+          teamId && ( // add a check for teamId
+            <>{teamId && <TotalVotesPerTeam teamId={teamId.toString()} />}</>
+          )}
       </div>
     </div>
   );
-}
+};
 
 export default TeamReports;

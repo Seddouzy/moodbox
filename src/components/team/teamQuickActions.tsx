@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ComponentType } from "react";
 import Cog6ToothIcon from "@heroicons/react/24/outline/Cog6ToothIcon";
-import { ChartBarIcon, HandThumbUpIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import { ChartBarIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { useFirestore } from "reactfire";
 interface TeamQuickActionsProps {
   teamName: string;
@@ -28,10 +28,10 @@ const TeamQuickActions: ComponentType<TeamQuickActionsProps> = ({
   };
 
   const goToTeam = () => {
-      if (teamId) {
-        router.push(`/team/${teamId}`);
-      }
-  }
+    if (teamId) {
+      router.push(`/team/${teamId}`);
+    }
+  };
 
   return (
     <div className="flex flex-row gap-2 justify-between items-center pb-4 border-slate-100 dark:border-slate-800">
