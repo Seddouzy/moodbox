@@ -110,7 +110,7 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
         {canVote.lastVote && (
           <small>
             Last Vote:{" "}
-            <span>{new Date(canVote.lastVote)?.toLocaleDateString()}</span>
+            <span>{new Date(canVote.lastVote)?.toLocaleString()}</span>
           </small>
         )}
       </>

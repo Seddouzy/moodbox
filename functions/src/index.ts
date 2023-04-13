@@ -3,6 +3,10 @@ import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
+const getUser = async (uid?: string) => {
+  return uid ? admin.auth().getUser(uid) : null;
+};
+
 const userIsAuthenticatedCheck = (context: functions.https.CallableContext) => {
   // Check that the user is authenticated
   if (!context.auth) {
@@ -21,6 +25,9 @@ const hasVoteInLast24Hours = async (
   const now = new Date();
   const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000); // Subtract 24 hours from the current time
   const teamVotesRef = admin.firestore().collection(`teams/${teamId}/votes`);
+  functions.logger.log(`now: ${now}`);
+  functions.logger.log(`teamID: ${teamId}`);
+  functions.logger.log(`Context UID: ${context.auth?.uid}`);
   const querySnapshot = await teamVotesRef
     .where("createdAt", ">", yesterday)
     .where("userId", "==", context.auth?.uid)
@@ -29,33 +36,35 @@ const hasVoteInLast24Hours = async (
       console.error("Error getting votes in team:", err);
       throw err;
     });
-  if (querySnapshot.empty) {
+  functions.logger.log(querySnapshot.docs);
+  if (!querySnapshot.docs.length) {
     return { state: false, date: null };
   }
   const firstDoc = querySnapshot.docs[0];
-  return { state: true, date: firstDoc.get("createdAt") };
+  return { state: true, date: firstDoc.get("createdAt")?.toDate() };
 };
 
 export const canVote = functions.https.onCall(
   async (data: any, context: functions.https.CallableContext) => {
     const { teamId } = data;
     userIsAuthenticatedCheck(context);
+    const user = await getUser(context.auth?.uid);
 
     functions.logger.log(
-      `user ${context.auth?.uid} requesting to vote on team ${teamId}`
+      `user ${user?.displayName} requesting to vote on team ${teamId}`
     );
 
     const hasVote = await hasVoteInLast24Hours(teamId, context);
     if (!hasVote.state) {
       return {
-        message: `User ${context.auth?.uid} is allowed to vote in team ${teamId}`,
+        message: `User ${user?.displayName} is allowed to vote in team ${teamId}`,
         state: true,
       };
     }
     return {
-      message: `User ${context.auth?.uid} is not allowed to vote in team ${teamId}. Already voted in last 24 hours.`,
+      message: `User ${user?.displayName} is not allowed to vote in team ${teamId}. Already voted in last 24 hours.`,
       state: false,
-      lastVote: hasVote.date,
+      lastVote: hasVote.date?.toString(),
     };
   }
 );
@@ -64,8 +73,8 @@ export const vote = functions.https.onCall(
   async (data: any, context: functions.https.CallableContext) => {
     const { teamId, sentiment } = data;
     userIsAuthenticatedCheck(context);
-    const isAllowedToVote = !(await hasVoteInLast24Hours(teamId, context));
-    if (!isAllowedToVote) {
+    const voteInLast24Hours = await hasVoteInLast24Hours(teamId, context);
+    if (voteInLast24Hours.state) {
       throw new functions.https.HttpsError(
         "permission-denied",
         "User is not allowed to vote! Already voted in last 24 hours."
