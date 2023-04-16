@@ -1,3 +1,4 @@
+import { ChartBarIcon } from "@heroicons/react/24/outline";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { ComponentType, useEffect, useState } from "react";
 
@@ -25,11 +26,9 @@ const TotalVotesPerTeam: ComponentType<TotalVotesPerTeamProps> = ({
 
   return (
     <div>
-      <div className="flex flex-row text-xl items-center text-yellow-600 ml-3">
-        TOTAL VOTES:
-        <div className="flex flex-row text-xl items-center text-yellow-600 ml-3">
-          {numVotes}
-        </div>
+      <div className="flex flex-row gap-2 items-center outline outline-2 outline-offset-4 outline-transparent hover:outline-cyan-400 transition-all ease-in-out from-cyan-300 to-cyan-500 text-cyan-900 bg-gradient-to-br px-4 py-2 rounded-lg uppercase disabled:opacity-70">
+        <ChartBarIcon className="w-6 h-6" />
+        <div className="font-bold">{numVotes}</div>
       </div>
     </div>
   );

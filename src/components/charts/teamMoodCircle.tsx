@@ -1,4 +1,4 @@
-import { UserGroupIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { ComponentType, useEffect, useState } from "react";
@@ -9,7 +9,7 @@ interface TeamMoodCircleProps {
 
 const TeamMoodCircle: ComponentType<TeamMoodCircleProps> = ({ teamId }) => {
   const [numAvgVotes, setNumAvgVotes] = useState(0);
-  const [circleColor, setCircleColor] = useState(`gold`);
+  const [moodColor, setMoodColor] = useState(`gold`);
 
   useEffect(() => {
     if (teamId) {
@@ -31,11 +31,11 @@ const TeamMoodCircle: ComponentType<TeamMoodCircleProps> = ({ teamId }) => {
         setNumAvgVotes(numAvgVotes);
 
         if (numAvgVotes >= 0.9 && numAvgVotes <= 1.0) {
-          setCircleColor(`emerald`);
+          setMoodColor(`emerald`);
         } else if (numAvgVotes >= 0.4 && numAvgVotes < 0.7) {
-          setCircleColor(`amber`);
+          setMoodColor(`amber`);
         } else if (numAvgVotes >= 0.1 && numAvgVotes < 0.4) {
-          setCircleColor(`pink`);
+          setMoodColor(`pink`);
         }
       };
       getNumVotes();
@@ -44,18 +44,12 @@ const TeamMoodCircle: ComponentType<TeamMoodCircleProps> = ({ teamId }) => {
 
   return (
     <div>
-      AVG Votes:
-      {circleColor}
       <div
-        className={`flex flex-row text-xl items-center text-${circleColor}-600 ml-3`}
+        className={`flex flex-row gap-2 items-center outline outline-2 outline-offset-4 outline-transparent hover:outline-${moodColor}-400 from-${moodColor}-300 to-${moodColor}-500 bg-gradient-to-br text-${moodColor}-900 px-4 py-2 rounded-lg uppercase`}
       >
-        {numAvgVotes}
-      </div>
-      <div
-        className={`flex flex-row gap-2 items-center outline outline-2 outline-offset-4 outline-transparent hover:outline-${circleColor}-400 bg-gradient-to-br from-${circleColor}-300 to-${circleColor}-500 text-${circleColor}-900 px-4 py-2 rounded-lg uppercase disabled:opacity-70`}
-      >
-        Avg Votes
         <UserGroupIcon className="w-6 h-6" />
+        <HeartIcon className="w-6 h-6" />
+        {numAvgVotes}
       </div>
     </div>
   );

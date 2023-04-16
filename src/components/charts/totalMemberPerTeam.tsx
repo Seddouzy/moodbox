@@ -1,3 +1,4 @@
+import { UserGroupIcon } from "@heroicons/react/24/outline";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { ComponentType, useEffect, useState } from "react";
 
@@ -12,24 +13,22 @@ const TotalVotesPerTeam: ComponentType<TotalVotesPerTeamProps> = ({
 
   useEffect(() => {
     if (teamId) {
-      const getNumVotes = async () => {
+      const getMemberCount = async () => {
         const firestore = getFirestore();
-        const votesRef = collection(firestore, `teams/${teamId}/members`);
-        const votesSnapshot = await getDocs(votesRef);
-        const numMembers = votesSnapshot.size;
+        const memberRef = collection(firestore, `teams/${teamId}/members`);
+        const memberSnapshot = await getDocs(memberRef);
+        const numMembers = memberSnapshot.size;
         setNumMembers(numMembers);
       };
-      getNumVotes();
+      getMemberCount();
     }
   }, [teamId]);
 
   return (
     <div>
-      <div className="flex flex-row text-xl items-center text-yellow-600 ml-3">
-        TOTAL VOTES:
-        <div className="flex flex-row text-xl items-center text-yellow-600 ml-3">
-          {numMembers}
-        </div>
+      <div className="flex flex-row gap-2 items-center outline outline-2 outline-offset-4 outline-transparent hover:outline-cyan-400 transition-all ease-in-out from-cyan-300 to-cyan-500 text-cyan-900 bg-gradient-to-br px-4 py-2 rounded-lg uppercase disabled:opacity-70">
+        <UserGroupIcon className="w-6 h-6" />
+        <div className="font-bold">{numMembers}</div>
       </div>
     </div>
   );

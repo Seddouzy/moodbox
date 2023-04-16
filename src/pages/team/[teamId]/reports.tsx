@@ -11,6 +11,7 @@ import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import TeamQuickActions from "@/components/team/teamQuickActions";
 import TeamMoodCircle from "@/components/charts/teamMoodCircle";
+import TotalMemberPerTeam from "@/components/charts/totalMemberPerTeam";
 
 const TeamReports: NextPage = () => {
   const router = useRouter();
@@ -73,7 +74,7 @@ const TeamReports: NextPage = () => {
   return (
     <div>
       <TeamQuickActions teamName={data.name} />
-      <div className="container p-4 text-black dark:text-white">
+      <div className="container text-black dark:text-white flex flex-row justify-between items-center">
         {error && <div>Error: {error.message}</div>}
         {data &&
           !error &&
@@ -81,10 +82,13 @@ const TeamReports: NextPage = () => {
             <div>
               {teamId && (
                 <>
-                  <div>
+                  <div className="mt-4">
+                    <TotalMemberPerTeam teamId={teamId.toString()} />
+                  </div>
+                  <div className="mt-4">
                     <TotalVotesPerTeam teamId={teamId.toString()} />
                   </div>
-                  <div>
+                  <div className="mt-4">
                     <TeamMoodCircle teamId={teamId.toString()} />
                   </div>
                 </>

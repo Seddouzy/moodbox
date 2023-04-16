@@ -125,7 +125,7 @@ const UserDropdown: ComponentType<UserDropdownProps> = ({ children }) => {
                         onClick={() => setTheme("light")}
                         className="flex h-10 w-10 shrink-0 justify-center text-white sm:h-7 sm:w-7"
                       >
-                        <SunIcon />
+                        <SunIcon className="w-6 h-6" />
                       </button>
                     </div>
                   )}
