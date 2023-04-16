@@ -10,6 +10,7 @@ import { NextPage } from "next";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import TeamQuickActions from "@/components/team/teamQuickActions";
+import TeamMoodCircle from "@/components/charts/teamMoodCircle";
 
 const TeamReports: NextPage = () => {
   const router = useRouter();
@@ -77,7 +78,18 @@ const TeamReports: NextPage = () => {
         {data &&
           !error &&
           teamId && ( // add a check for teamId
-            <>{teamId && <TotalVotesPerTeam teamId={teamId.toString()} />}</>
+            <div>
+              {teamId && (
+                <>
+                  <div>
+                    <TotalVotesPerTeam teamId={teamId.toString()} />
+                  </div>
+                  <div>
+                    <TeamMoodCircle teamId={teamId.toString()} />
+                  </div>
+                </>
+              )}
+            </div>
           )}
       </div>
     </div>
