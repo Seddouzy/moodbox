@@ -30,12 +30,12 @@ const TeamMoodCircle: ComponentType<TeamMoodCircleProps> = ({ teamId }) => {
           votesSnapshot.size > 0 ? totalSentiment / votesSnapshot.size : 0;
         setNumAvgVotes(numAvgVotes);
 
-        if (numAvgVotes >= 0.9 && numAvgVotes <= 1.0) {
-          setMoodColor(`emerald`);
-        } else if (numAvgVotes >= 0.4 && numAvgVotes < 0.7) {
-          setMoodColor(`amber`);
+        if (numAvgVotes >= 0.8 && numAvgVotes <= 0.9) {
+          setMoodColor(`green`);
+        } else if (numAvgVotes >= 0.4 && numAvgVotes < 0.8) {
+          setMoodColor(`yellow`);
         } else if (numAvgVotes >= 0.1 && numAvgVotes < 0.4) {
-          setMoodColor(`pink`);
+          setMoodColor(`red`);
         }
       };
       getNumVotes();
@@ -49,7 +49,7 @@ const TeamMoodCircle: ComponentType<TeamMoodCircleProps> = ({ teamId }) => {
       >
         <UserGroupIcon className="w-6 h-6" />
         <HeartIcon className="w-6 h-6" />
-        {numAvgVotes}
+        {numAvgVotes} {moodColor}
       </div>
     </div>
   );
