@@ -1,3 +1,4 @@
+import { AnonymousVote } from "@/shared/interface/AnonymousVote";
 import { pickFromGradient } from "@/shared/services/colorService";
 import { HeartIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 import UserIcon from "@heroicons/react/24/outline/UserIcon";
@@ -6,35 +7,32 @@ import { ComponentType, useEffect, useState } from "react";
 
 interface TeamMoodCircleProps {
   teamId: string;
+  votes: AnonymousVote[];
 }
 
-const TeamMoodCircle: ComponentType<TeamMoodCircleProps> = ({ teamId }) => {
+const TeamMoodCircle: ComponentType<TeamMoodCircleProps> = ({
+  teamId,
+  votes,
+}) => {
   const [numAvgVotes, setNumAvgVotes] = useState(0);
   const [moodColor, setMoodColor] = useState(`gold`);
 
   useEffect(() => {
-    if (teamId) {
-      const getNumVotes = async () => {
-        const firestore = getFirestore();
-        const votesRef = collection(firestore, `teams/${teamId}/votes`);
-        const votesSnapshot = await getDocs(votesRef);
+    if (teamId && votes) {
+      let totalSentiment = 0;
+      console.log(votes);
+      votes.forEach((voteDoc) => {
+        const sentiment = voteDoc.sentiment;
+        if (typeof sentiment === "number") {
+          totalSentiment += sentiment;
+        }
+      });
 
-        let totalSentiment = 0;
-        votesSnapshot.forEach((voteDoc) => {
-          const sentiment = voteDoc.data().sentiment;
-          if (typeof sentiment === "number") {
-            totalSentiment += sentiment;
-          }
-        });
-
-        const rating =
-          votesSnapshot.size > 0 ? totalSentiment / votesSnapshot.size : 0;
-        setNumAvgVotes(rating);
-        setMoodColor(pickFromGradient(rating));
-      };
-      getNumVotes();
+      const rating = votes.length > 0 ? totalSentiment / votes.length : 0;
+      setNumAvgVotes(rating);
+      setMoodColor(pickFromGradient(rating));
     }
-  }, [teamId]);
+  }, [votes, teamId]);
 
   return (
     <div>

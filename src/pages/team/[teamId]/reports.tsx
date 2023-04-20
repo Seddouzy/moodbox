@@ -7,11 +7,20 @@ import { useHasRole } from "@/hooks/useHasRole";
 import UserRole from "@/shared/enum/userRole.enum";
 import TotalVotesPerTeam from "@/components/charts/totalVotesPerTeam";
 import { NextPage } from "next";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 import TeamQuickActions from "@/components/team/teamQuickActions";
 import TeamMoodCircle from "@/components/charts/teamMoodCircle";
 import TotalMemberPerTeam from "@/components/charts/totalMemberPerTeam";
+import SentimentByDay from "@/components/charts/sentimentByDay";
+import { AnonymousVote } from "@/shared/interface/AnonymousVote";
 
 const TeamReports: NextPage = () => {
   const router = useRouter();
@@ -21,6 +30,7 @@ const TeamReports: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<any>(null);
   const { data: user } = useUser();
+  const [allTeamVotes, setAllTeamVotes] = useState<AnonymousVote[]>([]);
 
   const hasRole = useHasRole({
     teamId: teamId as string,
@@ -28,22 +38,23 @@ const TeamReports: NextPage = () => {
     role: UserRole.MEMBER,
   });
 
-  const updateTeam = async (updateData: Record<string, any>) => {
-    if (teamId) {
-      const docRef = doc(firestore, "teams", teamId.toString());
-      await toast
-        .promise(updateDoc(docRef, updateData), {
-          pending: `Updating Team ${data.name}`,
-          success: `Updated Team ${data.name}`,
-          error: {
-            render({ data }) {
-              const err = data as any;
-              return `${err.code}: ${err.message} 🤯`;
-            },
-          },
-        })
-        .catch((err) => console.error(err));
-    }
+  const fetchVotes = async () => {
+    const firestore = getFirestore();
+    const votesRef = collection(firestore, `teams/${teamId}/votes`);
+    const votesSnapshot = await getDocs(votesRef);
+    const votes: AnonymousVote[] = [];
+    votesSnapshot.forEach((voteSnapshot) => {
+      const data = voteSnapshot.data();
+      const anonVote: AnonymousVote = {
+        createdAt: data.createdAt.toDate(),
+        sentiment: data.sentiment,
+      } as AnonymousVote;
+      votes.push(anonVote);
+    });
+
+    setAllTeamVotes(
+      votes.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+    );
   };
 
   useEffect(() => {
@@ -60,8 +71,9 @@ const TeamReports: NextPage = () => {
           setLoading(false);
         }
       );
+      fetchVotes();
     }
-  }, [teamId, firestore]);
+  }, [teamId]);
 
   if (loading || hasRole === undefined) {
     return <LoadingSpinner text="Fetching Team reports" />;
@@ -74,27 +86,32 @@ const TeamReports: NextPage = () => {
   return (
     <div>
       <TeamQuickActions teamName={data.name} />
-      <div className="container text-black dark:text-white flex flex-row justify-between items-center">
+      <div className="container mx-auto text-black dark:text-white flex flex-row justify-between items-center">
         {error && <div>Error: {error.message}</div>}
-        {data &&
-          !error &&
-          teamId && ( // add a check for teamId
-            <div>
-              {teamId && (
-                <>
-                  <div className="mt-4">
-                    <TotalMemberPerTeam teamId={teamId.toString()} />
-                  </div>
-                  <div className="mt-4">
-                    <TotalVotesPerTeam teamId={teamId.toString()} />
-                  </div>
-                  <div className="mt-4">
-                    <TeamMoodCircle teamId={teamId.toString()} />
-                  </div>
-                </>
+        {data && !error && teamId && (
+          <div className="grid grid-cols-4 gap-10 w-full mt-10">
+            <div className="flex flex-col col-span-4 md:col-span-1 gap-4 justify-start p-10 bg-black/10 rounded-xl">
+              <TotalMemberPerTeam teamId={teamId.toString()} />
+              <TotalVotesPerTeam teamId={teamId.toString()} />
+              {allTeamVotes && teamId && (
+                <TeamMoodCircle
+                  teamId={teamId.toString()}
+                  votes={allTeamVotes}
+                />
               )}
             </div>
-          )}
+            <div className="flex flex-col col-span-4 md:col-span-3 gap-10 justify-center items-center p-10 bg-black/10 rounded-xl">
+              {allTeamVotes && (
+                <SentimentByDay
+                  sentiments={allTeamVotes.map((v) => ({
+                    date: v.createdAt,
+                    sentimentAvg: v.sentiment,
+                  }))}
+                />
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
