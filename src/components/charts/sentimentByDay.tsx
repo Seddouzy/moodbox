@@ -35,7 +35,7 @@ const SentimentByDay: ComponentType<SentimentByDayProps> = ({ sentiments }) => {
     responsive: true,
     scales: {
       x: {
-        type: "time",
+        type: "timeseries",
         time: {
           unit: "week",
         },
