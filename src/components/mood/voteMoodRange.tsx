@@ -2,8 +2,8 @@ import { httpsCallable } from "firebase/functions";
 import { ComponentType, useState, MouseEvent, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useFirestore, useFunctions } from "reactfire";
+import { pickFromGradient } from "../../shared/services/colorService";
 import HandThumbUpIcon from "@heroicons/react/24/outline/HandThumbUpIcon";
-import colors from "tailwindcss/colors";
 
 interface VoteMoodRangeProps {
   teamId: string;
@@ -37,25 +37,6 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
       .catch((err) => console.error(err));
   }, []);
 
-  const hexToRgb = (hex: string): number[] => {
-    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (result) {
-      const [, r, g, b] = result;
-      return [parseInt(r, 16), parseInt(g, 16), parseInt(b, 16)];
-    } else {
-      throw new Error(`Invalid hex color value: ${hex}`);
-    }
-  };
-  const colorArr = [
-    colors.red[400],
-    colors.amber[400],
-    colors.yellow[400],
-    colors.lime[400],
-    colors.green[500],
-  ].map((hex) => hexToRgb(hex));
-
   const handleMouseEnter = (event: MouseEvent<HTMLButtonElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -87,22 +68,6 @@ const VoteMoodRange: ComponentType<VoteMoodRangeProps> = ({ teamId }) => {
     }
   };
 
-  const pickFromGradient = (value: number): string => {
-    if (value <= 0) {
-      return `rgb(${colorArr[0].join(", ")})`;
-    } else if (value >= 1) {
-      return `rgb(${colorArr[2].join(", ")})`;
-    } else {
-      const index = Math.floor(value * (colorArr.length - 1));
-      const [r1, g1, b1] = colorArr[index];
-      const [r2, g2, b2] = colorArr[index + 1];
-      const ratio = value * (colorArr.length - 1) - index;
-      const r = Math.round(r1 + ratio * (r2 - r1));
-      const g = Math.round(g1 + ratio * (g2 - g1));
-      const b = Math.round(b1 + ratio * (b2 - b1));
-      return `rgb(${r}, ${g}, ${b})`;
-    }
-  };
   if (!canVote.state) {
     return (
       <>
