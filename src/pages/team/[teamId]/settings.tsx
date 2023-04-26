@@ -1,34 +1,26 @@
-import {
-  useFirestoreDocData,
-  useFirestore,
-  useAuth,
-  useUser,
-  useFunctions,
-} from "reactfire";
+import { useFirestore, useUser } from "reactfire";
 
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { httpsCallable } from "firebase/functions";
 import LoadingSpinner from "@/components/general/loadingSpinner";
 import { useHasRole } from "@/hooks/useHasRole";
 import CreateTeamInvitationLink from "../../../components/team/createTeamInvitationLink";
 import UserRole from "@/shared/enum/userRole.enum";
 import NotAuthorized from "@/components/general/notAuthorized";
 import TeamMemberList from "@/components/team/teamMemberList";
+import TeamQuickActions from "@/components/team/teamQuickActions";
 
 const TeamSettings: NextPage = () => {
   const router = useRouter();
   const { teamId } = router.query;
   const firestore = useFirestore();
-  const functions = useFunctions();
-  const auth = useAuth();
   const [error, setError] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<any>(null);
-  const { status, data: user } = useUser();
+  const { data: user } = useUser();
 
   const hasRole = useHasRole({
     teamId: teamId as string,
@@ -79,26 +71,24 @@ const TeamSettings: NextPage = () => {
     return <NotAuthorized text="no access to team settings" />;
   }
 
-  //TODO: Hier zweispaltig join team und create Team? Oder einfach Team join nur über invitation link ganz ohne extra page?
   return (
-    <div className="container p-4 text-black dark:text-white">
-      {error && <div>Error: {error.message}</div>}
-      {data && !error && (
-        <>
-          <h1 className="text-3xl font-black">{data.name}</h1>
-          {teamId && (
-            <CreateTeamInvitationLink
-              teamId={teamId.toString()}
-              tokenId={data.tokenId}
-              updateTeam={updateTeam}
-            />
-          )}
-          <div>
-            <h1 className="text-3xl font-black">{"Team Member List"}</h1>
-            {teamId && <TeamMemberList teamId={teamId.toString()} />}
-          </div>
-        </>
-      )}
+    <div>
+      <TeamQuickActions teamName={data.name} />
+      <div className="container p-4 dark:bg-slate-700 h-full min-h-screen">
+        {error && <div>Error: {error.message}</div>}
+        {data && !error && (
+          <>
+            {teamId && (
+              <CreateTeamInvitationLink
+                teamId={teamId.toString()}
+                tokenId={data.tokenId}
+                updateTeam={updateTeam}
+              />
+            )}
+            <div>{teamId && <TeamMemberList teamId={teamId.toString()} />}</div>
+          </>
+        )}
+      </div>
     </div>
   );
 };
