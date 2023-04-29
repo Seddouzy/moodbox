@@ -2,7 +2,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ComponentType } from "react";
 import Cog6ToothIcon from "@heroicons/react/24/outline/Cog6ToothIcon";
-import { ChartBarIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
+import {
+  ChartBarIcon,
+  HandThumbUpIcon,
+  HeartIcon,
+} from "@heroicons/react/24/outline";
 import { useFirestore } from "reactfire";
 interface TeamQuickActionsProps {
   teamName: string;
@@ -33,9 +37,9 @@ const TeamQuickActions: ComponentType<TeamQuickActionsProps> = ({
     }
   };
 
-  const goToTeamOverview = () => {
+  const goToMyReports = () => {
     if (teamId) {
-      router.push(`/team/${teamId}`);
+      router.push(`/team/${teamId}/myReports`);
     }
   };
 
@@ -48,6 +52,9 @@ const TeamQuickActions: ComponentType<TeamQuickActionsProps> = ({
         </button>
         <button className="btn" onClick={goToReports}>
           <ChartBarIcon className="w-6 h-6" />
+        </button>
+        <button className="btn" onClick={goToMyReports}>
+          <HeartIcon className="w-6 h-6" />
         </button>
         <button className="btn" onClick={goToSettings}>
           <Cog6ToothIcon className="w-6 h-6" />
