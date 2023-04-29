@@ -74,7 +74,7 @@ const TeamSettings: NextPage = () => {
   return (
     <div>
       <TeamQuickActions teamName={data.name} />
-      <div className="container p-4 dark:bg-slate-700 h-full min-h-screen">
+      <div className="container p-4 dark:bg-slate-700 h-full">
         {error && <div>Error: {error.message}</div>}
         {data && !error && (
           <>

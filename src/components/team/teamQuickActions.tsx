@@ -33,6 +33,12 @@ const TeamQuickActions: ComponentType<TeamQuickActionsProps> = ({
     }
   };
 
+  const goToTeamOverview = () => {
+    if (teamId) {
+      router.push(`/team/${teamId}`);
+    }
+  };
+
   return (
     <div className="flex flex-row gap-2 justify-between items-center pb-4 border-slate-100 dark:border-slate-800">
       <h2 className="text-3xl">{teamName}</h2>

@@ -15,7 +15,7 @@ import QuoteOfTheDay from "@/components/mood/quoteOfThDay";
 export default function App({ Component, pageProps }: AppProps) {
   const { publicRuntimeConfig } = getConfig();
   return (
-    <div className="h-screen">
+    <div className="min-h-screen dark:bg-slate-700 bg-white text-black dark:text-white font-mono">
       <Head>
         <title>Moodbox</title>
         <link rel="shortcut icon" href="/favicon.ico" />

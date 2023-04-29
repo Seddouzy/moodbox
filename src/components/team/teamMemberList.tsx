@@ -36,7 +36,7 @@ const TeamMemberList: ComponentType<TeamMemberListProps> = ({ teamId }) => {
   }, [teamId]);
 
   return (
-    <div className="flex flex-col mp-4 mt-4 rounded-xl bg-slate-100 dark:bg-slate-800 dark:text-white p-8 ">
+    <div className="flex flex-col mp-4 mt-4 rounded-xl bg-slate-100 dark:bg-slate-800 dark:text-white p-8 h-full">
       <h1 className="text-3xl font-black">{"Team Member List"}</h1>
       {members.map((member: any) => (
         <div key={member.id} className="flex flex-row md:flex-row p-4">
