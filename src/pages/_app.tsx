@@ -10,7 +10,6 @@ import LocalFirebaseAuthProvider from "@/providers/firebaseAuthProvider";
 import LocalFirestoreProvider from "@/providers/firestoreProvider";
 import LocalFirebaseFunctionsProvider from "@/providers/firebaseFunctionsProvider";
 import { ToastContainer } from "react-toastify";
-import QuoteOfTheDay from "@/components/mood/quoteOfThDay";
 
 export default function App({ Component, pageProps }: AppProps) {
   const { publicRuntimeConfig } = getConfig();
