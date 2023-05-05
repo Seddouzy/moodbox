@@ -1,55 +1,50 @@
-import {
-  collection,
-  getDocs,
-  Firestore,
-  getDoc,
-  doc,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { useFirestore, useUser } from "reactfire";
-import { MoodTeam } from "../shared/interface/MoodTeam";
+import { useState, useEffect } from "react";
+import { getDocs, collection, where, query } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
-export const useMyVotes = () => {
-  const [myTeams, setMyTeams] = useState<MoodTeam[]>([]);
-  const [myVotes, setMyVotes] = useState("");
+const firebaseConfig = {
+  // your firebase config here
+};
 
-  const firestore = useFirestore();
-  const user = useUser();
+const db = getFirestore();
+
+type Vote = {
+  id: string;
+  createdAt: Date;
+  userId: string;
+  sentiment: number;
+};
+
+const useMyVotes = (teamId: string, userId: string) => {
+  const [votes, setVotes] = useState<Vote[]>([]);
 
   useEffect(() => {
-    const fetchVotes = async () => {
-      if (user.data?.uid) {
-        const votes = await getVotesUserIsMemberOf(user.data.uid, firestore);
-        setMyVotes(user.data?.uid);
+    const getVotes = async () => {
+      try {
+        const teamVotesRef = collection(db, "teams", teamId, "votes");
+        const userVotesQuery = query(
+          teamVotesRef,
+          where("userId", "==", userId)
+        );
+        const userVotesSnapshot = await getDocs(userVotesQuery);
+        const newVotes = userVotesSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Vote[];
+        setVotes(newVotes);
+      } catch (error) {
+        console.error("Error fetching user votes:", error);
       }
     };
 
-    fetchVotes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+    getVotes();
 
-  return myTeams;
+    // unsubscribe when component unmounts
+    return () => {};
+  }, [teamId, userId]);
+
+  return votes;
 };
 
-const getVotesUserIsMemberOf = async (
-  userId: string,
-  firestore: Firestore
-): Promise<MoodTeam[]> => {
-  const teamsRef = collection(firestore, "teams");
-  const teamSnapshots = await getDocs(teamsRef);
-  const teams = [];
-
-  for (const teamDoc of teamSnapshots.docs) {
-    const teamId = teamDoc.id;
-    const memberDocRef = doc(firestore, `teams/${teamId}/members/${userId}`);
-    const memberDocSnapshot = await getDoc(memberDocRef);
-
-    if (memberDocSnapshot.exists()) {
-      const teamData = teamDoc.data();
-      teamData.id = teamId; // Include the team ID in the team data
-      teams.push(teamData);
-    }
-  }
-
-  return teams as MoodTeam[];
-};
+export default useMyVotes;
