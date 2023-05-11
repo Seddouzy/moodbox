@@ -20,6 +20,8 @@ import TeamMoodCircle from "@/components/charts/teamMoodCircle";
 import TotalMemberPerTeam from "@/components/charts/totalMemberPerTeam";
 import { AnonymousVote } from "@/shared/interface/AnonymousVote";
 import TotalVotesPerPerson from "@/components/charts/totalVotesPerPerson";
+import PersonMoodCircle from "@/components/charts/personMoodCircle";
+import PersonSentimentByDay from "@/components/charts/personSentimentByDay";
 
 const MyReports: NextPage = () => {
   const router = useRouter();
@@ -106,9 +108,18 @@ const MyReports: NextPage = () => {
                 userId={user?.uid?.toString() ?? ""}
               />
               {allTeamVotes && teamId && (
-                <TeamMoodCircle
+                <PersonMoodCircle
                   teamId={teamId.toString()}
                   votes={allTeamVotes}
+                  userId={user?.uid?.toString() ?? ""}
+                />
+              )}
+            </div>
+            <div className="flex flex-col col-span-4 md:col-span-3 gap-10 justify-center items-center p-10 bg-black/10 rounded-xl">
+              {allTeamVotes && (
+                <PersonSentimentByDay
+                  teamId={teamId?.toString()}
+                  userId={user?.uid?.toString() ?? ""}
                 />
               )}
             </div>
