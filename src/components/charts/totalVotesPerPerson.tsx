@@ -1,6 +1,5 @@
 import { ChartBarIcon } from "@heroicons/react/24/outline";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { useRouter } from "next/router";
 import { ComponentType, useEffect, useState } from "react";
 
 interface TotalVotesPerPersonProps {
@@ -9,20 +8,26 @@ interface TotalVotesPerPersonProps {
 }
 
 const TotalVotesPerPerson: ComponentType<TotalVotesPerPersonProps> = ({
-  userId,
   teamId,
+  userId,
 }) => {
-  const router = useRouter();
-  const [numVotes, setNumVotes] = useState();
-  const [query, setQuery] = useState("");
+  const [numVotes, setNumVotes] = useState(0);
 
-  const filteredVotes = query === "";
-
-  const handleTeamSelect = (teamId: string) => {
-    if (router.asPath !== `/team/${teamId}`) {
-      router.push(`/team/${teamId}`);
+  useEffect(() => {
+    if (teamId && userId) {
+      const getNumVotes = async () => {
+        const firestore = getFirestore();
+        const votesRef = collection(firestore, `teams/${teamId}/votes`);
+        const votesSnapshot = await getDocs(votesRef);
+        const filteredVotes = votesSnapshot.docs.filter(
+          (doc) => doc.data().user_id === userId
+        );
+        const numVotes = filteredVotes.length;
+        setNumVotes(numVotes);
+      };
+      getNumVotes();
     }
-  };
+  }, [teamId, userId]);
 
   return (
     <div>

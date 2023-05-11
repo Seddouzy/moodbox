@@ -5,7 +5,6 @@ import { useFirestore, useUser } from "reactfire";
 import { useEffect, useState } from "react";
 import { useHasRole } from "@/hooks/useHasRole";
 import UserRole from "@/shared/enum/userRole.enum";
-import TotalVotesPerTeam from "@/components/charts/totalVotesPerTeam";
 import { NextPage } from "next";
 import {
   collection,
@@ -19,8 +18,8 @@ import { toast } from "react-toastify";
 import TeamQuickActions from "@/components/team/teamQuickActions";
 import TeamMoodCircle from "@/components/charts/teamMoodCircle";
 import TotalMemberPerTeam from "@/components/charts/totalMemberPerTeam";
-import SentimentByDay from "@/components/charts/sentimentByDay";
 import { AnonymousVote } from "@/shared/interface/AnonymousVote";
+import TotalVotesPerPerson from "@/components/charts/totalVotesPerPerson";
 
 const MyReports: NextPage = () => {
   const router = useRouter();
@@ -29,6 +28,7 @@ const MyReports: NextPage = () => {
   const [error, setError] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<any>(null);
+  const userData = useUser();
   const { data: user } = useUser();
   const [allTeamVotes, setAllTeamVotes] = useState<AnonymousVote[]>([]);
 
@@ -92,8 +92,19 @@ const MyReports: NextPage = () => {
         {data && !error && teamId && (
           <div className="grid grid-cols-4 gap-10 w-full mt-10">
             <div className="flex flex-col col-span-4 md:col-span-1 gap-4 justify-start p-10 bg-black/10 rounded-xl">
+              <div className="relative rounded-full bg-yellow-500 h-12 w-12 flex flex-row justify-center items-center overflow-hidden">
+                <div
+                  className="absolute top-0 left-0 w-full h-full bg-cover"
+                  style={{
+                    backgroundImage: `url("${userData.data?.photoURL}")`,
+                  }}
+                />
+              </div>
               <TotalMemberPerTeam teamId={teamId.toString()} />
-              <TotalVotesPerTeam teamId={teamId.toString()} />
+              <TotalVotesPerPerson
+                teamId={teamId?.toString()}
+                userId={user?.uid?.toString() ?? ""}
+              />
               {allTeamVotes && teamId && (
                 <TeamMoodCircle
                   teamId={teamId.toString()}
