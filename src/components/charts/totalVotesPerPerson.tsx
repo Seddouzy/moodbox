@@ -1,5 +1,11 @@
 import { ChartBarIcon } from "@heroicons/react/24/outline";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 import { ComponentType, useEffect, useState } from "react";
 
 interface TotalVotesPerPersonProps {
@@ -18,11 +24,9 @@ const TotalVotesPerPerson: ComponentType<TotalVotesPerPersonProps> = ({
       const getNumVotes = async () => {
         const firestore = getFirestore();
         const votesRef = collection(firestore, `teams/${teamId}/votes`);
-        const votesSnapshot = await getDocs(votesRef);
-        const filteredVotes = votesSnapshot.docs.filter(
-          (doc) => doc.data().user_id === userId
-        );
-        const numVotes = filteredVotes.length;
+        const userVotesQuery = query(votesRef, where("userId", "==", userId));
+        const votesSnapshot = await getDocs(userVotesQuery);
+        const numVotes = votesSnapshot.size;
         setNumVotes(numVotes);
       };
       getNumVotes();
