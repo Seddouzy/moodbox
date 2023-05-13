@@ -94,7 +94,6 @@ const MyReports: NextPage = () => {
   return (
     <div>
       <TeamQuickActions teamName={data.name} />
-      Your personal Reports... Work in Progress... coming soon :)
       <div className="container mx-auto text-black dark:text-white flex flex-row justify-between items-center">
         {error && <div>Error: {error.message}</div>}
         {data && !error && teamId && (
