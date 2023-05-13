@@ -46,6 +46,7 @@ const MyReports: NextPage = () => {
     const votesSnapshot = await getDocs(votesRef);
     const votes: AnonymousVote[] = [];
     const userVotes: AnonymousVote[] = [];
+    const currentUser = user?.uid;
     votesSnapshot.forEach((voteSnapshot) => {
       const data = voteSnapshot.data();
       const anonVote: AnonymousVote = {
@@ -55,7 +56,7 @@ const MyReports: NextPage = () => {
       } as AnonymousVote;
       votes.push(anonVote);
 
-      if (anonVote.userId === user?.uid) {
+      if (anonVote.userId === currentUser) {
         userVotes.push(anonVote);
       }
     });
