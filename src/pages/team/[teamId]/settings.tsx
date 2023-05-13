@@ -25,6 +25,12 @@ const TeamSettings: NextPage = () => {
   const hasRole = useHasRole({
     teamId: teamId as string,
     userId: user?.uid,
+    role: UserRole.MEMBER,
+  });
+
+  const isOwner = useHasRole({
+    teamId: teamId as string,
+    userId: user?.uid,
     role: UserRole.OWNER,
   });
 
@@ -78,7 +84,7 @@ const TeamSettings: NextPage = () => {
         {error && <div>Error: {error.message}</div>}
         {data && !error && (
           <>
-            {teamId && (
+            {isOwner && teamId && (
               <CreateTeamInvitationLink
                 teamId={teamId.toString()}
                 tokenId={data.tokenId}

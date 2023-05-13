@@ -1,8 +1,6 @@
 import { AnonymousVote } from "@/shared/interface/AnonymousVote";
 import { pickFromGradient } from "@/shared/services/colorService";
 import { HeartIcon, UserGroupIcon } from "@heroicons/react/24/outline";
-import UserIcon from "@heroicons/react/24/outline/UserIcon";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { ComponentType, useEffect, useState } from "react";
 
 interface TeamMoodCircleProps {
@@ -20,7 +18,6 @@ const TeamMoodCircle: ComponentType<TeamMoodCircleProps> = ({
   useEffect(() => {
     if (teamId && votes) {
       let totalSentiment = 0;
-      console.log(votes);
       votes.forEach((voteDoc) => {
         const sentiment = voteDoc.sentiment;
         if (typeof sentiment === "number") {
