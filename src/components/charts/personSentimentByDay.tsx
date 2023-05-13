@@ -1,4 +1,4 @@
-import { ComponentType, useEffect, useState } from "react";
+import { ComponentType } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,13 +14,6 @@ import {
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-moment";
 import { amber } from "tailwindcss/colors";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from "firebase/firestore";
 
 ChartJS.register(
   TimeSeriesScale,
@@ -33,32 +26,11 @@ ChartJS.register(
   Legend
 );
 
-interface PersonSentimentByDayProps {
-  teamId: string;
-  userId: string;
+interface SentimentByDayProps {
+  sentiments: { sentimentAvg: number; date: Date }[];
 }
 
-const PersonSentimentByDay: ComponentType<PersonSentimentByDayProps> = ({
-  teamId,
-  userId,
-}) => {
-  const [sentiments, setSentiments] = useState([]);
-
-  useEffect(() => {
-    const fetchSentiments = async () => {
-      const firestore = getFirestore();
-      const votesRef = collection(firestore, `teams/${teamId}/votes`);
-      const userVotesQuery = query(votesRef, where("userId", "==", userId));
-      const votesSnapshot = await getDocs(userVotesQuery);
-      const sentimentData = votesSnapshot.docs.map((doc) => doc.data());
-      setSentiments(sentimentData);
-    };
-
-    if (teamId && userId) {
-      fetchSentiments();
-    }
-  }, [teamId, userId]);
-
+const SentimentByDay: ComponentType<SentimentByDayProps> = ({ sentiments }) => {
   const options: ChartOptions<"line"> = {
     responsive: true,
     scales: {
@@ -98,4 +70,4 @@ const PersonSentimentByDay: ComponentType<PersonSentimentByDayProps> = ({
   return <Line data={data} options={options} />;
 };
 
-export default PersonSentimentByDay;
+export default SentimentByDay;

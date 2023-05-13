@@ -45,17 +45,23 @@ const MyReports: NextPage = () => {
     const votesRef = collection(firestore, `teams/${teamId}/votes`);
     const votesSnapshot = await getDocs(votesRef);
     const votes: AnonymousVote[] = [];
+    const userVotes: AnonymousVote[] = [];
     votesSnapshot.forEach((voteSnapshot) => {
       const data = voteSnapshot.data();
       const anonVote: AnonymousVote = {
         createdAt: data.createdAt.toDate(),
         sentiment: data.sentiment,
+        userId: data.userId,
       } as AnonymousVote;
       votes.push(anonVote);
+
+      if (anonVote.userId === user?.uid) {
+        userVotes.push(anonVote);
+      }
     });
 
     setAllTeamVotes(
-      votes.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+      userVotes.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
     );
   };
 
@@ -118,8 +124,10 @@ const MyReports: NextPage = () => {
             <div className="flex flex-col col-span-4 md:col-span-3 gap-10 justify-center items-center p-10 bg-black/10 rounded-xl">
               {allTeamVotes && (
                 <PersonSentimentByDay
-                  teamId={teamId?.toString()}
-                  userId={user?.uid?.toString() ?? ""}
+                  sentiments={allTeamVotes.map((v) => ({
+                    date: v.createdAt,
+                    sentimentAvg: v.sentiment,
+                  }))}
                 />
               )}
             </div>
