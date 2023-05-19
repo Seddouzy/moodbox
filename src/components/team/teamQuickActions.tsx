@@ -6,6 +6,7 @@ import {
   ChartBarIcon,
   HandThumbUpIcon,
   HeartIcon,
+  RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
 import { useFirestore } from "reactfire";
 interface TeamQuickActionsProps {
@@ -54,7 +55,7 @@ const TeamQuickActions: ComponentType<TeamQuickActionsProps> = ({
           <ChartBarIcon className="w-6 h-6" />
         </button>
         <button className="btn" onClick={goToMyReports}>
-          <HeartIcon className="w-6 h-6" />
+          <RocketLaunchIcon className="w-6 h-6" />
         </button>
         <button className="btn" onClick={goToSettings}>
           <Cog6ToothIcon className="w-6 h-6" />
